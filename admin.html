@@ -71,6 +71,48 @@ select{font:inherit;font-size:17px;padding:6px 10px;border:3px solid var(--ink);
 table{border-collapse:collapse;width:100%;font-size:15px}
 td,th{border-bottom:1px solid #e3e5eb;padding:4px 6px;text-align:left}
 details summary{cursor:pointer;color:var(--muted);margin-top:6px}
+/* carta Frutadex (igual que en el juego) */
+.dexcard{margin:0 0 6px;text-align:left;overflow:hidden;padding:0;background:#fff;border:3.5px solid var(--ink);border-radius:24px 28px 22px 30px/28px 22px 30px 24px;box-shadow:5px 6px 0 var(--ink)}
+.dexcard .hd{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:3px solid var(--ink);font-family:'Chewy';font-size:20px}
+.dexcard .hd .hp{font-size:18px}
+.dexcard .bd{padding:12px 14px 14px}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.badge{white-space:nowrap;font-family:'Chewy';font-size:15px;border:2.5px solid var(--ink);border-radius:12px;padding:2px 10px}
+.sci{font-style:italic;opacity:.75;font-size:17px;margin-bottom:10px}
+.stat{display:grid;grid-template-columns:110px 1fr 22px;align-items:center;gap:8px;font-size:18px;margin:5px 0}
+.bar{height:15px;border:2.5px solid var(--ink);border-radius:10px;background:#fff;overflow:hidden}
+.bar i{display:block;height:100%;width:var(--w);border-right:2.5px solid var(--ink)}
+.bar i.zero{border-right:none}
+.verdict{display:flex;gap:10px;align-items:flex-start;margin:14px 0 10px}
+.verdict svg{flex:none;width:52px}
+.verdict .bub{position:relative;background:#fff9db;border:3px solid var(--ink);border-radius:16px;padding:8px 12px;font-size:18.5px;line-height:1.15}
+.verdict .bub small{display:block;font-family:'Chewy';font-size:14px;opacity:.65;margin-bottom:2px}
+.move{display:flex;justify-content:space-between;gap:8px;border-top:2.5px dashed var(--ink);padding-top:8px;margin-top:6px;font-size:18px}
+.move b{font-family:'Chewy';font-weight:normal}
+
+/* frutadex del panel */
+.dexctl{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:4px 0 12px}
+.fchip{font-family:'Chewy';font-size:15px;border:2.5px solid var(--ink);border-radius:12px;padding:3px 10px;background:#fff;cursor:pointer;color:var(--ink)}
+.fchip.on{background:var(--ink);color:#fff}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.ftile{border:3px solid var(--ink);border-radius:16px 18px 14px 20px;box-shadow:3px 3px 0 var(--ink);background:#fff;padding:6px 8px 8px;cursor:pointer;text-align:center;font-size:15px;line-height:1.15}
+.ftile:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.ftile svg{width:92px;display:block;margin:0 auto -4px}
+.ftile .nm{font-family:'Chewy';font-size:18px}
+.ftile .rar{white-space:nowrap;font-size:12px;border:2px solid var(--ink);border-radius:10px;padding:0 7px;display:inline-block;margin:3px 0 5px}
+.ftile .odds{display:flex;justify-content:space-between;gap:4px;border-top:1.5px dashed #c9ccd6;padding-top:4px;margin-top:2px;color:var(--muted)}
+.ftile .odds b{color:var(--ink);font-weight:normal;font-family:'Chewy';font-size:16px}
+.rsum{width:100%;border-collapse:collapse;font-size:16px;margin-bottom:12px}
+.rsum td,.rsum th{padding:5px 6px;border-bottom:1.5px solid #e3e5eb;text-align:right}
+.rsum td:first-child,.rsum th:first-child{text-align:left}
+.modal{position:fixed;inset:0;z-index:20;background:rgba(43,45,66,.55);display:none;align-items:flex-start;justify-content:center;padding:24px 14px;overflow-y:auto}
+.modal.open{display:flex}
+.sheet{width:100%;max-width:440px}
+.sheet .big{width:180px;margin:0 auto -8px;display:block}
+.oddsbox{background:#fff;border:3px solid var(--ink);border-radius:18px;box-shadow:4px 5px 0 var(--ink);padding:12px 14px;margin:14px 0}
+.oddsbox h4{font-family:'Chewy';font-weight:normal;font-size:20px;margin:0 0 6px}
+.oddsbox p{margin:4px 0}
+
 </style>
 </head>
 <body>
@@ -114,6 +156,22 @@ details summary{cursor:pointer;color:var(--muted);margin-top:6px}
       <div id="never"></div>
     </div>
 
+
+    <div class="box">
+      <h2>🃏 Frutadex completa</h2>
+      <p class="note" style="margin:0 0 8px"><b>Teórica</b>: probabilidad si alguien respondiera al azar. <b>Real</b>: porcentaje de partidas terminadas en que ha salido. Toca una fruta para ver su carta.</p>
+      <table class="rsum" id="rsum"></table>
+      <div class="dexctl">
+        <select id="dexSort">
+          <option value="num">Orden: número</option>
+          <option value="tdesc">Más probable (teórica)</option>
+          <option value="tasc">Menos probable (teórica)</option>
+          <option value="real">Más veces obtenida</option>
+        </select>
+        <span id="rarChips"></span>
+      </div>
+      <div class="fgrid" id="fgrid"></div>
+    </div>
     <div class="box">
       <h2>🧭 Tipo de respuesta que más eligen</h2>
       <p class="note" style="margin:0 0 6px">Suma de todas las respuestas, según la “vibra” de cada opción.</p>
@@ -136,8 +194,10 @@ details summary{cursor:pointer;color:var(--muted);margin-top:6px}
   </div>
 </div>
 <div class="tip" id="tip"></div>
+<div class="modal" id="modal"><div class="sheet" id="sheet"></div></div>
 
 <script src="data.js"></script>
+<script src="draw.js"></script>
 <script>
 const $=s=>document.querySelector(s);
 const VIBE=[{e:"🍬",k:"Dulce",c:"#ff8fab"},{e:"🍋",k:"Ácida",c:"#ffd43b"},{e:"🌀",k:"Caótica",c:"#9775fa"},{e:"💀",k:"Oscura",c:"#868e96"}];
@@ -198,7 +258,7 @@ function render(d){LAST=d;
   const vs=vt.reduce((a,b)=>a+b,0),vmax=Math.max(1,...vt),vwin=vs?vt.indexOf(Math.max(...vt)):-1;
   $("#vibes").innerHTML=VIBE.map((v,i)=>`<div class="hb ${i===vwin?"win":""}"><div class="lab"><span>${v.e} ${v.k}</span></div><div class="tr"><i style="width:${vt[i]/vmax*100}%"></i></div><div class="num">${vt[i]} · ${pct(vt[i],vs)}%</div></div>`).join("");
 
-  renderQuestions(d);
+  renderQuestions(d);renderDex(d);
   $("#notrackNote").textContent="ℹ️ Las partidas que juegues desde este navegador no se cuentan, para que tus pruebas no ensucien los datos.";
 }
 
@@ -219,6 +279,37 @@ function renderQuestions(d){
   if(orphan.length)html+=`<p class="note">Hay respuestas de ${orphan.length} pregunta(s) que ya no existen o cambiaron de texto.</p>`;
   $("#questions").innerHTML=html;
 }
+
+/* ---------- Frutadex completa ---------- */
+const ODDS=fruitOdds();let RFILTER=0;
+const fmtP=p=>p>=.1?p.toFixed(1)+"%":p>0?p.toFixed(2)+"%":"0%";
+const combo=f=>f.p.map((n,i)=>n?DIMS[i].e+"×"+n:"").filter(Boolean).join("  ");
+$("#rarChips").innerHTML=[0,1,2,3,4].map(r=>`<button class="fchip ${r===0?"on":""}" data-r="${r}">${r?RAR[r].s+" "+RAR[r].t:"Todas"}</button>`).join(" ");
+$("#rarChips").onclick=e=>{const b=e.target.closest(".fchip");if(!b)return;RFILTER=+b.dataset.r;document.querySelectorAll(".fchip").forEach(x=>x.classList.toggle("on",x===b));LAST&&renderDex(LAST)};
+$("#dexSort").onchange=()=>LAST&&renderDex(LAST);
+function renderDex(d){
+  const ends=d.ends||0,real=f=>d.fruits[f.n]||0;
+  $("#rsum").innerHTML=`<tr><th>Rareza</th><th>Frutas</th><th>Teórica</th><th>Real</th></tr>`+[1,2,3,4].map(r=>{const L=FRUITS.filter(f=>f.r===r);
+    const t=L.reduce((s,f)=>s+ODDS[f.n],0)*100,rc=L.reduce((s,f)=>s+real(f),0);
+    return`<tr><td><span class="badge" style="background:${RAR[r].c}">${RAR[r].s} ${RAR[r].t}</span></td><td>${L.length}</td><td>${t.toFixed(1)}%</td><td>${ends?pct(rc,ends)+"%":"—"}</td></tr>`}).join("");
+  let L=FRUITS.filter(f=>!RFILTER||f.r===RFILTER);const s=$("#dexSort").value;
+  if(s==="tdesc")L.sort((a,b)=>ODDS[b.n]-ODDS[a.n]||a.id-b.id);
+  if(s==="tasc")L.sort((a,b)=>ODDS[a.n]-ODDS[b.n]||a.id-b.id);
+  if(s==="real")L.sort((a,b)=>real(b)-real(a)||ODDS[b.n]-ODDS[a.n]);
+  $("#fgrid").innerHTML=L.map(f=>`<div class="ftile" data-id="${f.id}">${fruitSVG(f)}<div class="nm">#${String(f.id).padStart(3,"0")} ${esc(f.n)}</div>
+    <span class="rar" style="background:${RAR[f.r].c}">${RAR[f.r].s} ${RAR[f.r].t}</span>
+    <div class="odds"><span>Teórica</span><b>${fmtP(ODDS[f.n]*100)}</b></div>
+    <div class="odds"><span>Real</span><b>${ends?fmtP(real(f)/ends*100):"—"}</b></div>
+    <div class="note" style="font-size:13px">${real(f)} vez${real(f)===1?"":"es"}</div></div>`).join("");
+}
+$("#fgrid").onclick=e=>{const t=e.target.closest(".ftile");if(!t||!LAST)return;const f=FRUITS[t.dataset.id-1],d=LAST,n=d.fruits[f.n]||0,p=ODDS[f.n];
+  $("#sheet").innerHTML=`<div class="big">${fruitSVG(f)}</div>${cardHTML(f)}
+   <div class="oddsbox"><h4>🎲 Probabilidad</h4>
+     <p>Combinación que la da: <b>${combo(f)}</b></p>
+     <p>Teórica (respuestas al azar): <b>${fmtP(p*100)}</b> · más o menos 1 de cada <b>${Math.round(1/p)}</b> partidas</p>
+     <p>Real: <b>${d.ends?fmtP(n/d.ends*100):"—"}</b> (${n} de ${d.ends} partidas terminadas)</p></div>
+   <div style="text-align:center"><button class="btn" id="closeM">Cerrar</button></div>`;$("#modal").classList.add("open")};
+$("#modal").onclick=e=>{if(e.target.id==="modal"||e.target.id==="closeM")$("#modal").classList.remove("open")};
 
 // tooltip de las barras de días
 const tip=$("#tip");
