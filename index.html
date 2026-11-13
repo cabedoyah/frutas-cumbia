@@ -113,6 +113,8 @@ button{font-family:inherit;color:inherit}
 .react{position:absolute;left:50%;bottom:calc(var(--bot) + 22px);z-index:25;transform:translateX(-50%) scale(0);
   width:84%;padding:12px 16px;font-size:20px;text-align:center;background:var(--yellow);transition:transform .35s cubic-bezier(.2,.9,.3,1.6)}
 .react.show{transform:translateX(-50%) scale(1) rotate(1deg)}
+.react{cursor:pointer;line-height:1.15}
+.react small{display:block;font-size:14px;opacity:.55;margin-top:5px}
 
 /* ---------- pensando ---------- */
 #s-think{align-items:center;justify-content:center;text-align:center}
@@ -273,7 +275,6 @@ button{font-family:inherit;color:inherit}
     <button class="btn" id="btnPlay">¡A jugar! 🎶</button>
     <button class="btn small lila" id="btnDex">📖 Frutadex <span id="dexMini"></span></button>
   </div>
-  <div class="foot">Juego de humor. Fernando Cañamero no se hace responsable de tu identidad frutal.</div>
 </section>
 
 <!-- QUIZ -->
@@ -440,7 +441,15 @@ F("Guanábana","f","Annona muricata","0023",2,"tall","#5aa14a","#2f6b25","spikes
 const DIMS=[{k:"Dulzura",e:"🍬",c:"#ff8fab",t:"Dulce"},{k:"Acidez",e:"🍋",c:"#ffd43b",t:"Ácido"},{k:"Caos",e:"🌀",c:"#9775fa",t:"Cósmico"},{k:"Oscuridad",e:"💀",c:"#868e96",t:"Sombrío"}];
 const RAR=[null,{t:"Común",c:"#b2f2bb",s:"★"},{t:"Rara",c:"#a5d8ff",s:"★★"},{t:"Exótica",c:"#eebefa",s:"★★★"},{t:"Legendaria",c:"#ffe066",s:"★★★★"}];
 const MOODS=["d","a","c","o"];
-const REACTIONS=["Fernando anotó eso en su libreta negra 📓","Mmm… sospechoso.","Una ballena lloró en algún lugar 🐋","Interesante elección. Preocupante, pero interesante.","Tu abuela estaría… confundida.","El pulpo aprobó con 3 de sus 8 brazos 🐙","Eso explica muchas cosas.","Fernando se quitó las gafas lentamente.","Respuesta guardada para el juicio final.","Ni el ajolote se lo esperaba.","Hay que hablar de esto. Luego. Con un adulto.","Fernando asintió, pero con miedo.","Tu terapeuta acaba de sentir un escalofrío.","Ok. No vamos a juzgar. (Sí vamos a juzgar.)"];
+const REACTIONS=["Fernando anotó eso en su libreta negra 📓","Mmm… sospechoso.","Una ballena lloró en algún lugar 🐋","Interesante elección. Preocupante, pero interesante.","Tu abuela estaría… confundida.","El pulpo aprobó con 3 de sus 8 brazos 🐙","Eso explica muchas cosas.","Fernando se quitó las gafas lentamente.","Respuesta guardada para el juicio final.","Ni el ajolote se lo esperaba.","Hay que hablar de esto. Luego. Con un adulto.","Fernando asintió, pero con miedo.","Tu terapeuta acaba de sentir un escalofrío.","Ok. No vamos a juzgar. (Sí vamos a juzgar.)",
+ "Esto va directo a tu expediente.","Fernando acaba de cambiar su contraseña, por si acaso.","Tu horóscopo se negó a comentar.","Un capibara te mira con decepción.","Fernando necesita un momento a solas.","Hasta el tardígrado sintió algo.","Esa respuesta huele a lunes.","Guardado en la nube. En la nube de tormenta ⛈️","Lo vamos a usar en tu contra. Con cariño.","Un ganso en algún lugar asintió con respeto 🪿","Tu yo de 5 años quiere hablar con el gerente.","Fernando subrayó eso dos veces.","Nadie lo vio venir. Literalmente nadie.","El ajolote pidió una segunda opinión.","Respuesta válida. Moralmente dudosa, pero válida.","La ballena dejó de cantar para escucharte 🐋","Fernando se tomó un tinto para procesarlo ☕","Esa respuesta ya está pagando arriendo en la cabeza de Fernando.","Tu árbol genealógico acaba de perder una hoja.","Fernando lo va a contar en la próxima reunión familiar.","Respuesta enviada a un comité de cinco palomas.","El universo tomó captura de pantalla 📸"];
+const RDIM=[
+ ["Qué ternura… sospechosa.","Tanta dulzura da caries, ¿sabías? 🦷","Fernando sospecha que eres buena gente solo para que te quieran.","Aprobado por todas las abuelas del barrio 👵","Los ositos de peluche aplauden en silencio 🧸","Demasiado tierno. Fernando está buscando la trampa.","Un gatito estornudó de la emoción.","Eres la persona que le pide perdón a los muebles."],
+ ["Uy, salió el sarcasmo de paseo.","Eso arde más que limón en herida 🍋","Fernando dice que eres insoportable. Lo dice con admiración.","Respuesta con un pH peligrosamente bajo.","Alguien no desayunó hoy.","Eso fue pasivo-agresivo, pero sin lo pasivo.","Tu ironía acaba de cortar un tomate.","Seguro respondes los correos con “según lo hablado”."],
+ ["No entendimos nada y nos encantó.","Tu cerebro tiene 47 pestañas abiertas 🧠","Fernando tuvo que leerlo dos veces. Y una al revés.","El caos te reconoce como uno de los suyos 🌀","Respuesta aleatoria detectada. Llamando a un pulpo.","No tiene sentido. Por eso es perfecto.","Una paloma acaba de olvidar cómo volar.","Tienes la energía de una licuadora sin tapa."],
+ ["Fernando cerró la puerta con seguro 🔒","Vamos a fingir que no leímos eso.","Tu respuesta asustó a la medusa.","Ok… ¿estás bien? (No respondas.)","Eso fue oscuro hasta para el fondo del mar.","El buitre tomó nota con mucho interés.","Hasta el pez abisal apagó su linterna 🔦","Llamando a un sacerdote. Y a un abogado."]];
+let usedR=new Set();
+function pickReaction(d){const pool=Math.random()<.55?RDIM[d]:REACTIONS;let opts=pool.filter(t=>!usedR.has(t));if(!opts.length)opts=pool;const t=opts[Math.random()*opts.length|0];usedR.add(t);return t}
 const THINK=["Pelando tu personalidad…","Consultando a una ballena jorobada…","Midiendo tu acidez emocional…","Preguntándole a un pulpo (dio 8 opiniones)…","Licuando tus respuestas…","Fernando Cañamero frunce el ceño…"];
 
 /* =========================================================
@@ -575,36 +584,67 @@ const PROF=`<svg viewBox="0 0 60 64"><g filter="url(#wob)" stroke="${INK}" strok
 /* =========================================================
    SONIDO: efectos + loop de cumbia con WebAudio
    ========================================================= */
-const Sound={ctx:null,on:true,m:null,timer:null,next:0,step:0,bar:0,
-  init(){if(this.ctx)return;try{this.ctx=new(window.AudioContext||window.webkitAudioContext)();this.m=this.ctx.createGain();this.m.gain.value=.55;this.m.connect(this.ctx.destination)}catch(e){this.ctx=null}},
-  resume(){try{this.ctx&&this.ctx.state==="suspended"&&this.ctx.resume()}catch(e){}},
+/* WAV silencioso: en iPhone, mantener un <audio> sonando hace que el sonido web
+   se escuche aunque el interruptor de silencio esté activado */
+function silentWav(){const n=4000,buf=new ArrayBuffer(44+n),v=new DataView(buf),w=(o,t)=>{for(let i=0;i<t.length;i++)v.setUint8(o+i,t.charCodeAt(i))};
+  w(0,"RIFF");v.setUint32(4,36+n,true);w(8,"WAVE");w(12,"fmt ");v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,1,true);
+  v.setUint32(24,8000,true);v.setUint32(28,8000,true);v.setUint16(32,1,true);v.setUint16(34,8,true);w(36,"data");v.setUint32(40,n,true);
+  for(let i=0;i<n;i++)v.setUint8(44+i,128);return URL.createObjectURL(new Blob([buf],{type:"audio/wav"}))}
+const IS_IOS=/iP(hone|ad|od)/.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
+const Sound={ctx:null,on:true,m:null,timer:null,next:0,step:0,primed:false,silent:null,
+  init(){if(this.ctx)return;try{const AC=window.AudioContext||window.webkitAudioContext;this.ctx=new AC();
+    const comp=this.ctx.createDynamicsCompressor();comp.threshold.value=-20;comp.ratio.value=4;comp.connect(this.ctx.destination);
+    this.m=this.ctx.createGain();this.m.gain.value=this.on?.9:0;this.m.connect(comp)}catch(e){this.ctx=null}},
+  resume(){try{if(this.ctx&&this.ctx.state!=="running")this.ctx.resume()}catch(e){}},
+  /* se llama dentro de un toque del usuario */
+  unlock(){if(!this.on){this.init();return}
+    try{if(navigator.audioSession)navigator.audioSession.type="playback"}catch(e){}
+    if(IS_IOS){try{if(!this.silent){this.silent=new Audio(silentWav());this.silent.loop=true;this.silent.setAttribute("playsinline","")}this.silent.play().catch(()=>{})}catch(e){}}
+    this.init();this.resume();
+    if(this.ctx&&!this.primed){try{const s=this.ctx.createBufferSource();s.buffer=this.ctx.createBuffer(1,1,22050);s.connect(this.ctx.destination);s.start(0);this.primed=true}catch(e){}}
+    this.startLoop()},
   tone(f,d,type="sine",v=.2,t=0,f2){if(!this.ctx||!this.on)return;const c=this.ctx,o=c.createOscillator(),g=c.createGain(),T=c.currentTime+t;
     o.type=type;o.frequency.setValueAtTime(f,T);if(f2)o.frequency.exponentialRampToValueAtTime(f2,T+d);
     g.gain.setValueAtTime(0,T);g.gain.linearRampToValueAtTime(v,T+.01);g.gain.exponentialRampToValueAtTime(.0008,T+d);o.connect(g);g.connect(this.m);o.start(T);o.stop(T+d+.05)},
   noise(d,v,T,fq=4000,q=1.2){const c=this.ctx;if(!this.nb){this.nb=c.createBuffer(1,c.sampleRate,c.sampleRate);const a=this.nb.getChannelData(0);for(let i=0;i<a.length;i++)a[i]=Math.random()*2-1}
     const s=c.createBufferSource(),bp=c.createBiquadFilter(),g=c.createGain();s.buffer=this.nb;bp.type="bandpass";bp.frequency.value=fq;bp.Q.value=q;
     g.gain.setValueAtTime(0,T);g.gain.linearRampToValueAtTime(v,T+.008);g.gain.exponentialRampToValueAtTime(.0008,T+d);s.connect(bp);bp.connect(g);g.connect(this.m);s.start(T,Math.random()*.5);s.stop(T+d+.02)},
-  tap(){this.tone(520,.09,"square",.06,0,880)},
-  pop(){this.tone(300,.18,"sine",.25,0,900);this.tone(900,.1,"triangle",.08,.05,1400)},
-  crack(){if(!this.ctx||!this.on)return;this.noise(.12,.5,this.ctx.currentTime,2200,.8);this.tone(180,.12,"square",.08,0,90)},
-  fanfare(){[523,659,784,1047].forEach((f,i)=>this.tone(f,.25,"triangle",.18,i*.09));[523,659,784].forEach(f=>this.tone(f,.9,"square",.05,.4));this.tone(1568,.6,"sine",.08,.4)},
-  /* cumbia: I–V7–V7–I a ~96 bpm. bajo en 1 y 3, güiro largo-corto, acordeón a contratiempo */
+  tap(){this.tone(520,.09,"square",.08,0,880)},
+  pop(){this.tone(400,.18,"triangle",.3,0,1000);this.tone(900,.1,"square",.06,.05,1400)},
+  crack(){if(!this.ctx||!this.on)return;this.noise(.12,.6,this.ctx.currentTime,2200,.8);this.tone(260,.12,"square",.1,0,140)},
+  fanfare(){[523,659,784,1047].forEach((f,i)=>this.tone(f,.25,"square",.1,i*.09));[523,659,784].forEach(f=>this.tone(f,.9,"square",.05,.4));this.tone(1568,.6,"triangle",.12,.4)},
   startLoop(){if(!this.ctx||this.timer)return;this.next=this.ctx.currentTime+.08;this.step=0;
-    this.timer=setInterval(()=>{if(!this.on)return;while(this.next<this.ctx.currentTime+.15){this.sched(this.step,this.next);this.next+=60/96/2;this.step++}},30)},
+    this.timer=setInterval(()=>{if(!this.on||!this.ctx)return;const now=this.ctx.currentTime;if(this.next<now-.2)this.next=now+.05;
+      while(this.next<now+.15){this.sched(this.step,this.next);this.next+=60/96/2;this.step++}},30)},
   stopLoop(){clearInterval(this.timer);this.timer=null},
-  sched(st,T){const c=this.ctx,b=st%8,bar=Math.floor(st/8)%4,dom=bar===1||bar===2;
-    const root=dom?98:130.81,fifth=dom?146.83:196,chord=dom?[246.94,293.66,349.23]:[261.63,329.63,392];
-    const env=(o,v,d)=>{const g=c.createGain();g.gain.setValueAtTime(0,T);g.gain.linearRampToValueAtTime(v,T+.01);g.gain.exponentialRampToValueAtTime(.0008,T+d);o.connect(g);g.connect(this.m);o.start(T);o.stop(T+d+.05)};
-    if(b===0||b===4){const o=c.createOscillator();o.type="triangle";o.frequency.value=b===0?root:fifth;env(o,.32,.32);
-      const k=c.createOscillator();k.frequency.setValueAtTime(120,T);k.frequency.exponentialRampToValueAtTime(45,T+.15);env(k,.35,.16)}
-    if(b===3||b===7){const o=c.createOscillator();o.type="triangle";o.frequency.value=root*(b===3?1.5:2);env(o,.16,.15)}
-    this.noise(b%2?.04:.16,b%2?.10:.07,T,b%2?5200:3800,1.4);
-    if(b%2){chord.forEach(fq=>{const o=c.createOscillator(),lp=c.createBiquadFilter();o.type="square";o.frequency.value=fq;lp.type="lowpass";lp.frequency.value=1600;o.connect(lp);
-      const g=c.createGain();g.gain.setValueAtTime(0,T);g.gain.linearRampToValueAtTime(.022,T+.01);g.gain.exponentialRampToValueAtTime(.0008,T+.13);lp.connect(g);g.connect(this.m);o.start(T);o.stop(T+.18)})}
+  /* cumbia I–V7–V7–I a ~96 bpm, en registros que sí suenan en el parlante del móvil:
+     bajo, güiro largo-corto, acordeón a contratiempo y una melodía de 8 compases */
+  MEL:[[659,0,784,0,659,587,523,0],[587,0,698,0,587,523,494,0],[494,523,587,0,698,0,587,0],[523,0,659,0,523,0,0,0],
+       [784,0,880,784,659,0,523,0],[698,0,784,698,587,0,494,0],[587,0,494,0,392,0,494,0],[523,0,0,0,523,0,659,0]],
+  sched(st,T){const c=this.ctx,b=st%8,bar=Math.floor(st/8)%8,dom=bar%4===1||bar%4===2;
+    const root=dom?196:261.63,fifth=dom?293.66:392,chord=dom?[493.88,587.33,698.46]:[523.25,659.25,783.99];
+    const voice=(type,f,v,d,lp)=>{const o=c.createOscillator(),g=c.createGain();o.type=type;o.frequency.value=f;let n=o;
+      if(lp){const fl=c.createBiquadFilter();fl.type="lowpass";fl.frequency.value=lp;o.connect(fl);n=fl}
+      g.gain.setValueAtTime(0,T);g.gain.linearRampToValueAtTime(v,T+.012);g.gain.exponentialRampToValueAtTime(.0008,T+d);n.connect(g);g.connect(this.m);o.start(T);o.stop(T+d+.05)};
+    if(b===0)voice("sawtooth",root,.2,.3,1000);
+    if(b===4)voice("sawtooth",fifth,.2,.3,1000);
+    if(b===6)voice("sawtooth",root,.13,.14,1000);
+    if(b===0||b===4){const k=c.createOscillator(),g=c.createGain();k.frequency.setValueAtTime(160,T);k.frequency.exponentialRampToValueAtTime(50,T+.14);
+      g.gain.setValueAtTime(.5,T);g.gain.exponentialRampToValueAtTime(.0008,T+.16);k.connect(g);g.connect(this.m);k.start(T);k.stop(T+.2)}
+    this.noise(b%2?.05:.17,b%2?.24:.16,T,b%2?5200:3800,1.4);
+    if(b%2)chord.forEach(fq=>voice("square",fq,.04,.12,2400));
+    const note=this.MEL[bar][b];if(note){voice("square",note,.075,.24,2800);voice("triangle",note*2,.03,.18)}
   },
   toggle(){this.on=!this.on;try{localStorage.setItem("fc.sound",this.on?"1":"0")}catch(e){}
-    if(this.on){this.init();this.resume();this.startLoop()}else this.stopLoop();updSoundBtn()}
+    if(this.on){this.unlock();if(this.m)this.m.gain.value=.9}else{this.stopLoop();if(this.m)this.m.gain.value=0;try{this.silent&&this.silent.pause()}catch(e){}}
+    updSoundBtn()}
 };
+/* la música empieza con el primer toque en cualquier parte */
+function firstTouch(){Sound.unlock();removeEventListener("touchend",firstTouch,true);removeEventListener("click",firstTouch,true)}
+addEventListener("touchend",firstTouch,true);addEventListener("click",firstTouch,true);
+document.addEventListener("visibilitychange",()=>{if(!Sound.ctx)return;
+  if(document.hidden){try{Sound.ctx.suspend()}catch(e){}try{Sound.silent&&Sound.silent.pause()}catch(e){}}
+  else if(Sound.on){Sound.resume();try{Sound.silent&&Sound.silent.play().catch(()=>{})}catch(e){}}});
 try{if(localStorage.getItem("fc.sound")==="0")Sound.on=false}catch(e){}
 function updSoundBtn(){$("#btnSound").textContent=Sound.on?"🔊":"🔇"}
 
@@ -634,8 +674,8 @@ function renderHome(){const pick=shuffle(FRUITS.slice()).slice(0,3);
    QUIZ
    ========================================================= */
 const N_Q=5;let S={qs:[],i:0,v:[0,0,0,0],lock:false};
-function startGame(){Sound.init();Sound.resume();if(Sound.on)Sound.startLoop();Sound.tap();
-  S={qs:shuffle(QUESTIONS.map((_,i)=>i)).slice(0,N_Q),i:0,v:[0,0,0,0],lock:false};show("s-quiz");renderQ()}
+function startGame(){Sound.unlock();Sound.tap();
+  usedR=new Set();S={qs:shuffle(QUESTIONS.map((_,i)=>i)).slice(0,N_Q),i:0,v:[0,0,0,0],lock:false};show("s-quiz");renderQ()}
 function renderQ(){const q=QUESTIONS[S.qs[S.i]];S.lock=false;
   $("#prog").innerHTML=Array.from({length:N_Q},(_,i)=>`<i class="${i<S.i?"done":i===S.i?"now":""}"></i>`).join("");
   const deco=FRUITS[Math.random()*FRUITS.length|0];
@@ -644,11 +684,15 @@ function renderQ(){const q=QUESTIONS[S.qs[S.i]];S.lock=false;
   const order=shuffle([0,1,2,3]);
   $("#opts").innerHTML=order.map((d,k)=>`<button class="opt" data-d="${d}"><span class="let">${"ABCD"[k]}</span><span>${q[d+1]}</span></button>`).join("");
   $("#s-quiz").scrollTop=0}
-$("#opts").addEventListener("click",e=>{const b=e.target.closest(".opt");if(!b||S.lock)return;S.lock=true;
-  S.v[+b.dataset.d]++;Sound.pop();if(navigator.vibrate)try{navigator.vibrate(15)}catch(_){}
+let advT=0,chosenAt=0;
+$("#opts").addEventListener("click",e=>{const b=e.target.closest(".opt");if(!b||S.lock)return;S.lock=true;chosenAt=Date.now();
+  const d=+b.dataset.d;S.v[d]++;Sound.pop();if(navigator.vibrate)try{navigator.vibrate(15)}catch(_){}
   document.querySelectorAll(".opt").forEach(o=>o.classList.add(o===b?"chosen":"faded"));
-  const r=$("#react");r.textContent=REACTIONS[Math.random()*REACTIONS.length|0];r.classList.add("show");
-  setTimeout(()=>{r.classList.remove("show");S.i++;if(S.i<N_Q)renderQ();else think()},1500)});
+  const txt=pickReaction(d),r=$("#react");r.innerHTML=`${txt}<small>toca para seguir 👆</small>`;r.classList.add("show");
+  const dur=Math.min(4600,Math.max(2800,1700+txt.length*55));advT=setTimeout(advance,dur)});
+function advance(){if(!advT)return;clearTimeout(advT);advT=0;$("#react").classList.remove("show");S.i++;if(S.i<N_Q)renderQ();else think()}
+$("#react").addEventListener("click",advance);
+$("#s-quiz").addEventListener("click",()=>{if(advT&&Date.now()-chosenAt>500)advance()});
 
 /* =========================================================
    PENSANDO → RESULTADO
