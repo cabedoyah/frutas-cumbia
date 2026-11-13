@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Frutas Cumbia · Panel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chewy&family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#2b2d42;--muted:#6c6f86;--paper:#fffaf0;--bar:#74c0fc;--bar-strong:#1c7ed6;--track:#eef1f6;--yellow:#ffd166;--pink:#ffafcc;--mint:#8ce99a;--lila:#c8b6ff}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Patrick Hand','Comic Sans MS',cursive;color:var(--ink);background:var(--paper);
+  background-image:radial-gradient(#d9dde5 .7px,transparent 1.2px);background-size:9px 9px;font-size:18px}
+.wrap{max-width:760px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 18px) 16px 40px}
+h1{font-family:'Chewy';font-weight:normal;font-size:40px;margin:4px 0 2px;color:var(--yellow);-webkit-text-stroke:1.5px var(--ink);paint-order:stroke fill;text-shadow:3px 3px 0 var(--ink)}
+h2{font-family:'Chewy';font-weight:normal;font-size:25px;margin:0 0 4px}
+.sub{color:var(--muted);margin:0 0 16px}
+.box{background:#fff;border:3px solid var(--ink);border-radius:20px 24px 18px 26px/24px 18px 26px 20px;box-shadow:4px 5px 0 var(--ink);padding:16px;margin:0 0 18px}
+.btn{font-family:'Chewy';font-size:19px;padding:9px 16px;border:3px solid var(--ink);border-radius:16px 20px 14px 22px;background:var(--yellow);box-shadow:3px 4px 0 var(--ink);cursor:pointer;color:var(--ink)}
+.btn:active{transform:translate(2px,3px);box-shadow:1px 1px 0 var(--ink)}
+.btn.ghost{background:#fff}.btn.danger{background:var(--pink)}
+input[type=password]{font:inherit;font-size:20px;width:100%;padding:10px 14px;border:3px solid var(--ink);border-radius:14px;margin:8px 0 12px;background:#fff}
+.err{color:#c92a2a;min-height:24px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;justify-content:space-between;align-items:center;margin-bottom:16px}
+.hidden{display:none!important}
+
+/* KPIs */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+.kpi{padding:12px 12px 10px;margin:0}
+.kpi .v{font-family:'Chewy';font-size:38px;line-height:1}
+.kpi .l{color:var(--muted);font-size:16px;line-height:1.1;margin-top:4px}
+@media (max-width:560px){.kpis{grid-template-columns:repeat(2,1fr)}}
+
+/* gráfico de días */
+.days{display:flex;align-items:flex-end;gap:4px;height:150px;padding:8px 0 0;border-bottom:2px solid var(--ink)}
+.day{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;position:relative;cursor:default}
+.day i{display:block;width:100%;max-width:30px;background:var(--bar);border-radius:4px 4px 0 0;min-height:0}
+.day:hover i{background:var(--bar-strong)}
+.day .n{font-size:13px;color:var(--muted);margin-bottom:2px}
+.dlabels{display:flex;gap:4px;margin-top:4px}
+.dlabels span{flex:1;text-align:center;font-size:12px;color:var(--muted)}
+.tip{position:fixed;pointer-events:none;background:var(--ink);color:#fff;padding:6px 10px;border-radius:10px;font-size:15px;z-index:10;opacity:0;transition:opacity .1s;white-space:nowrap}
+
+/* barras horizontales */
+.hb{display:grid;grid-template-columns:minmax(110px,38%) 1fr 62px;gap:8px;align-items:center;margin:6px 0;font-size:17px;line-height:1.1}
+.hb .lab{display:flex;gap:6px;align-items:center;min-width:0}
+.hb .lab span{overflow:hidden;text-overflow:ellipsis}
+.hb .tr{height:14px;background:var(--track);border-radius:4px;overflow:hidden}
+.hb .tr i{display:block;height:100%;background:var(--bar);border-radius:0 4px 4px 0}
+.hb.win .tr i{background:var(--bar-strong)}
+.hb.win .lab{font-weight:bold}
+.hb .num{text-align:right;color:var(--muted);font-size:15px;white-space:nowrap}
+.dot{flex:none;width:14px;height:14px;border-radius:50%;border:2px solid var(--ink)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.chip{border:2px solid var(--ink);border-radius:12px;padding:1px 9px;font-size:15px;background:#fff}
+
+/* preguntas */
+.q{border-top:2px dashed #c9ccd6;padding:14px 0 6px}
+.q:first-of-type{border-top:none}
+.q h3{font-size:20px;margin:0 0 2px;font-weight:normal;line-height:1.15}
+.q .meta{color:var(--muted);font-size:15px;margin-bottom:6px}
+.vibe{font-size:16px;flex:none}
+.q .hb{grid-template-columns:1fr 70px;row-gap:3px;margin:10px 0}
+.q .hb .lab{grid-column:1/-1;align-items:flex-start}
+.q .hb .lab span{overflow:visible}
+select{font:inherit;font-size:17px;padding:6px 10px;border:3px solid var(--ink);border-radius:12px;background:#fff}
+.note{color:var(--muted);font-size:15px}
+table{border-collapse:collapse;width:100%;font-size:15px}
+td,th{border-bottom:1px solid #e3e5eb;padding:4px 6px;text-align:left}
+details summary{cursor:pointer;color:var(--muted);margin-top:6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Panel de Fernando 🕵️</h1>
+  <p class="sub">Estadísticas anónimas de Frutas Cumbia</p>
+
+  <form class="box" id="login">
+    <h2>🔒 Acceso</h2>
+    <label for="pw">Contraseña de administrador</label>
+    <input type="password" id="pw" autocomplete="current-password" required>
+    <div class="err" id="loginErr"></div>
+    <button class="btn" type="submit">Entrar</button>
+  </form>
+
+  <div id="dash" class="hidden">
+    <div class="toolbar">
+      <div class="row">
+        <button class="btn" id="reload">🔄 Recargar</button>
+        <a class="btn ghost" href="/" style="text-decoration:none">🎮 Ir al juego</a>
+      </div>
+      <div class="row">
+        <button class="btn danger" id="reset">🗑️ Borrar datos</button>
+        <button class="btn ghost" id="logout">Salir</button>
+      </div>
+    </div>
+    <div class="err" id="dashErr"></div>
+
+    <div class="kpis" id="kpis"></div>
+
+    <div class="box">
+      <h2>📅 Partidas terminadas por día</h2>
+      <p class="note" style="margin:0 0 6px">Últimos 14 días (hora de España). Pasa el dedo o el ratón por una barra para ver el detalle.</p>
+      <div class="days" id="days"></div>
+      <div class="dlabels" id="dlabels"></div>
+    </div>
+
+    <div class="box">
+      <h2>🍓 Frutas que más salen</h2>
+      <div id="fruits"></div>
+      <div id="never"></div>
+    </div>
+
+    <div class="box">
+      <h2>🧭 Tipo de respuesta que más eligen</h2>
+      <p class="note" style="margin:0 0 6px">Suma de todas las respuestas, según la “vibra” de cada opción.</p>
+      <div id="vibes"></div>
+    </div>
+
+    <div class="box">
+      <div class="toolbar" style="margin:0">
+        <h2>❓ Respuestas por pregunta</h2>
+        <select id="sort">
+          <option value="most">Más respondidas</option>
+          <option value="orig">Orden original</option>
+          <option value="split">Más reñidas</option>
+        </select>
+      </div>
+      <div id="questions"></div>
+    </div>
+
+    <p class="note" id="notrackNote"></p>
+  </div>
+</div>
+<div class="tip" id="tip"></div>
+
+<script src="data.js"></script>
+<script>
+const $=s=>document.querySelector(s);
+const VIBE=[{e:"🍬",k:"Dulce",c:"#ff8fab"},{e:"🍋",k:"Ácida",c:"#ffd43b"},{e:"🌀",k:"Caótica",c:"#9775fa"},{e:"💀",k:"Oscura",c:"#868e96"}];
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const pct=(a,b)=>b?Math.round(a/b*100):0;
+let KEY="";try{KEY=sessionStorage.getItem("fc.admin")||""}catch(e){}
+
+// Este navegador no cuenta en las estadísticas (para que tus pruebas no ensucien los datos)
+try{localStorage.setItem("fc.notrack","1")}catch(e){}
+
+async function api(method,body){
+  const r=await fetch("/api/stats",{method,headers:{"x-admin-key":KEY,"Content-Type":"application/json"},body:body?JSON.stringify(body):undefined});
+  let j={};try{j=await r.json()}catch(e){}
+  if(!r.ok)throw Object.assign(new Error(j.error||("Error "+r.status)),{status:r.status});
+  return j;
+}
+
+$("#login").onsubmit=async e=>{e.preventDefault();KEY=$("#pw").value;$("#loginErr").textContent="Comprobando…";
+  try{const d=await api("GET");try{sessionStorage.setItem("fc.admin",KEY)}catch(_){}
+    $("#login").classList.add("hidden");$("#dash").classList.remove("hidden");$("#loginErr").textContent="";render(d)}
+  catch(err){$("#loginErr").textContent=err.message}};
+
+async function load(){$("#dashErr").textContent="";try{render(await api("GET"))}catch(err){
+  if(err.status===401){logout();$("#loginErr").textContent=err.message}else $("#dashErr").textContent=err.message}}
+function logout(){KEY="";try{sessionStorage.removeItem("fc.admin")}catch(e){}$("#dash").classList.add("hidden");$("#login").classList.remove("hidden");$("#pw").value=""}
+$("#reload").onclick=load;$("#logout").onclick=logout;
+let armed=0;$("#reset").onclick=async()=>{const b=$("#reset");
+  if(!armed){armed=setTimeout(()=>{armed=0;b.textContent="🗑️ Borrar datos"},4000);b.textContent="⚠️ ¿Seguro? Toca otra vez";return}
+  clearTimeout(armed);armed=0;b.textContent="🗑️ Borrar datos";
+  try{await api("POST",{action:"reset"});load()}catch(err){$("#dashErr").textContent=err.message}};
+$("#sort").onchange=()=>LAST&&renderQuestions(LAST);
+
+let LAST=null;
+function render(d){LAST=d;
+  const today=new Date().toLocaleDateString("sv-SE",{timeZone:"Europe/Madrid"});
+  const aband=d.starts?Math.max(0,100-pct(d.ends,d.starts)):0;
+  const kp=[[d.starts,"partidas empezadas"],[d.ends,"partidas terminadas"],[aband+"%","abandonan a la mitad"],[d.dayEnd[today]||0,"terminadas hoy"]];
+  $("#kpis").innerHTML=kp.map(([v,l])=>`<div class="box kpi"><div class="v">${v}</div><div class="l">${l}</div></div>`).join("");
+
+  // días
+  const days=[];for(let i=13;i>=0;i--){const t=new Date(Date.now()-i*864e5);days.push(t.toLocaleDateString("sv-SE",{timeZone:"Europe/Madrid"}))}
+  const max=Math.max(1,...days.map(k=>d.dayEnd[k]||0));
+  $("#days").innerHTML=days.map(k=>{const e=d.dayEnd[k]||0,s=d.dayStart[k]||0;
+    return`<div class="day" data-tip="${k.slice(8)}/${k.slice(5,7)}: ${e} terminadas · ${s} empezadas"><span class="n">${e||""}</span><i style="height:${e/max*100}%"></i></div>`}).join("");
+  $("#dlabels").innerHTML=days.map((k,i)=>`<span>${i%2?"":k.slice(8)+"/"+k.slice(5,7)}</span>`).join("");
+
+  // frutas
+  const tot=Object.values(d.fruits).reduce((a,b)=>a+b,0);
+  const list=FRUITS.map(f=>({f,n:d.fruits[f.n]||0})).filter(x=>x.n).sort((a,b)=>b.n-a.n);
+  const fmax=Math.max(1,...list.map(x=>x.n));
+  $("#fruits").innerHTML=list.length?list.map((x,i)=>`<div class="hb ${i===0?"win":""}"><div class="lab"><b class="dot" style="background:${x.f.c1}"></b><span>${i===0?"👑 ":""}${esc(x.f.n)}</span></div><div class="tr"><i style="width:${x.n/fmax*100}%"></i></div><div class="num">${x.n} · ${pct(x.n,tot)}%</div></div>`).join("")
+    :`<p class="note">Todavía no ha terminado nadie una partida.</p>`;
+  const never=FRUITS.filter(f=>!d.fruits[f.n]);
+  $("#never").innerHTML=never.length?`<details ${list.length?"":"open"}><summary>Nunca han salido (${never.length})</summary><div class="chips">${never.map(f=>`<span class="chip">${esc(f.n)}</span>`).join("")}</div></details>`:`<p class="note">🎉 ¡Ya salieron las 50 frutas!</p>`;
+
+  // vibras
+  const vt=[0,0,0,0];Object.entries(d.answers).forEach(([k,n])=>{const dd=+k.split(".")[1];if(dd>=0&&dd<4)vt[dd]+=n});
+  const vs=vt.reduce((a,b)=>a+b,0),vmax=Math.max(1,...vt),vwin=vs?vt.indexOf(Math.max(...vt)):-1;
+  $("#vibes").innerHTML=VIBE.map((v,i)=>`<div class="hb ${i===vwin?"win":""}"><div class="lab"><span>${v.e} ${v.k}</span></div><div class="tr"><i style="width:${vt[i]/vmax*100}%"></i></div><div class="num">${vt[i]} · ${pct(vt[i],vs)}%</div></div>`).join("");
+
+  renderQuestions(d);
+  $("#notrackNote").textContent="ℹ️ Las partidas que juegues desde este navegador no se cuentan, para que tus pruebas no ensucien los datos.";
+}
+
+function renderQuestions(d){
+  const known=new Set();
+  let qs=QUESTIONS.map((q,i)=>{const id=qid(q[0]);known.add(id);const c=[0,1,2,3].map(k=>d.answers[id+"."+k]||0);const t=c.reduce((a,b)=>a+b,0);
+    const s=[...c].sort((a,b)=>b-a);return{q,i,c,t,gap:t?(s[0]-s[1])/t:1}});
+  const sort=$("#sort").value;
+  if(sort==="most")qs.sort((a,b)=>b.t-a.t||a.i-b.i);
+  if(sort==="split")qs.sort((a,b)=>(a.t?0:1)-(b.t?0:1)||a.gap-b.gap||b.t-a.t);
+  const answered=qs.filter(x=>x.t),empty=qs.filter(x=>!x.t);
+  const card=x=>{const m=Math.max(...x.c),mx=Math.max(1,m);
+    return`<div class="q"><h3>${x.i+1}. ${esc(x.q[0])}</h3><div class="meta">${x.t} respuesta${x.t===1?"":"s"}</div>
+    ${[0,1,2,3].map(k=>`<div class="hb ${x.t&&x.c[k]===m?"win":""}" title="${esc(VIBE[k].k)}"><div class="lab"><span class="vibe">${VIBE[k].e}</span><span>${x.t&&x.c[k]===m?"👑 ":""}${esc(x.q[k+1])}</span></div><div class="tr"><i style="width:${x.c[k]/mx*100}%"></i></div><div class="num">${x.c[k]} · ${pct(x.c[k],x.t)}%</div></div>`).join("")}</div>`};
+  let html=answered.map(card).join("")||`<p class="note">Aún no hay respuestas.</p>`;
+  if(empty.length)html+=`<details><summary>Sin respuestas todavía (${empty.length})</summary>${empty.map(x=>`<p class="note" style="margin:6px 0">${x.i+1}. ${esc(x.q[0])}</p>`).join("")}</details>`;
+  const orphan=Object.keys(d.answers).map(k=>k.split(".")[0]).filter((v,i,a)=>!known.has(v)&&a.indexOf(v)===i);
+  if(orphan.length)html+=`<p class="note">Hay respuestas de ${orphan.length} pregunta(s) que ya no existen o cambiaron de texto.</p>`;
+  $("#questions").innerHTML=html;
+}
+
+// tooltip de las barras de días
+const tip=$("#tip");
+document.addEventListener("pointermove",e=>{const el=e.target.closest("[data-tip]");if(!el){tip.style.opacity=0;return}
+  tip.textContent=el.dataset.tip;tip.style.opacity=1;const x=Math.min(innerWidth-tip.offsetWidth-8,Math.max(8,e.clientX-tip.offsetWidth/2));tip.style.left=x+"px";tip.style.top=(e.clientY-44)+"px"});
+
+if(KEY){api("GET").then(d=>{$("#login").classList.add("hidden");$("#dash").classList.remove("hidden");render(d)}).catch(()=>logout())}
+</script>
+</body>
+</html>
