@@ -6,61 +6,61 @@
    ========================================================= */
 const QUESTIONS = [
  ["¿Qué sabor prefieres para lamer un pie?","Jabón de baño","Lápiz","Pablo","Pino silvestre"],
- ["Si tu ex fuera un electrodoméstico, ¿cuál sería?","Una tostadora con mucho amor","Un microondas: calienta todo menos el corazón","Una licuadora sin tapa","La nevera de la morgue"],
- ["Tienes 3 minutos de inmortalidad. ¿Qué haces?","Abrazar a un pato","Leer los términos y condiciones","Entrar a la jaula del león a saludar","Ir a mi propio funeral a criticar el catering"],
- ["Tu abuela te deja una herencia misteriosa. ¿Qué es?","Una colección de dedales","Sus deudas","Un cocodrilo llamado Germán","Un diario que dice “ya sabes lo que hiciste”"],
- ["¿Cuál es el peor lugar para estornudar?","Encima de un pastel de cumpleaños ajeno","En el minuto de silencio","Dentro de un violín","Dentro del ataúd, en pleno velorio"],
- ["Si fueras un sonido, ¿cuál serías?","Un gatito estornudando","Una tiza en el tablero","Un módem de 1998 conectándose","El silencio después de “tenemos que hablar”"],
- ["¿Qué le pondrías a la arepa de tu peor enemigo?","Mantequilla y amor, porque soy mejor persona","Sal… muchísima sal","Un tornillo y un poema","Nada. No merece arepa"],
- ["¿Qué animal te gustaría que narrara tu vida?","Una ballena con voz de abuelita","Un loro que solo dice “te lo dije”","Un ajolote borracho","Un buitre muy paciente"],
- ["Elige un superpoder inútil:","Hacer palomitas perfectas","Saber la hora exacta pero nunca el día","Convertirte en silla por 4 segundos","Saber cuánta gente te odia en una habitación"],
- ["¿Qué escribirías en tu lápida?","“Fui feliz y comí ponqué”","“Les dije que estaba enfermo”","“Buscando wifi”","“Tú eres el siguiente”"],
- ["¿A qué huele la tristeza?","A galleta mojada en leche","A lunes","A vela de cumpleaños apagada por un perro","A hospital un domingo"],
- ["Si un pulpo te pidiera matrimonio, ¿qué le dirías?","Sí, con los ocho brazos","¿Intenciones serias o solo tentáculos?","Solo si la boda es bajo el agua y en patineta","Que ya estoy comprometido con la soledad"],
- ["¿Qué te llevarías a una isla desierta?","Una cobija de dinosaurios","Un espejo, para tener con quién discutir","Una cabra con licencia de conducción","Una pala. Ya veremos para qué"],
- ["¿Cuál es tu sopa emocional?","Sopa de letras que dicen “te quiero”","Caldo de “te lo advertí”","Sopa de crayones","Consomé de lágrimas de mis enemigos"],
- ["Si reencarnaras en un objeto de oficina:","Un post-it con corazoncito","La grapadora que nadie devuelve","El clip que se volvió consciente","La trituradora de documentos"],
- ["Un fantasma te pide ayuda con su tesis. ¿Qué haces?","Le hago chocolatico y le ayudo","Le digo que ni vivo terminé la mía","Le pido que me presente a Tesla","Le cobro en almas"],
- ["El sabor de helado más prohibido:","Chicle de unicornio","Café con decepción","Mayonesa con chispitas","Herencia en disputa"],
- ["¿Qué le dirías a una ballena si pudiera entenderte?","Eres hermosa y te amo","Bonito tamaño, ¿y la personalidad?","¿Me llevas a Marte?","Sé lo que le hiciste a Jonás"],
- ["Tu vecino toca batería a las 3 a.m. ¿Qué haces?","Le llevo galletas y le pido clases","Le aplaudo con sarcasmo desde la ventana","Saco mi gaita y le hago dueto","Empiezo a cavar en el jardín, sin explicar nada"],
+ ["Si tu ex fuera un electrodoméstico, ¿cuál sería?","Una tostadora: me calentaba el pan y el corazón 🥺","Un microondas: calienta todo menos el corazón","Una licuadora sin tapa","La nevera de la morgue"],
+ ["Tienes 3 minutos de inmortalidad. ¿Qué haces?","Abrazar a un pato aunque me muerda (el amor duele)","Leer los términos y condiciones","Entrar a la jaula del león a saludar","Ir a mi propio funeral a criticar el catering"],
+ ["Tu abuela te deja una herencia misteriosa. ¿Qué es?","Sus dedales y una carta que dice “eras mi favorito” (se la escribió a todos)","Sus deudas","Un cocodrilo llamado Germán","Un diario que dice “ya sabes lo que hiciste”"],
+ ["¿Cuál es el peor lugar para estornudar?","Encima de un gatito… y pedirle perdón llorando","En el minuto de silencio","Dentro de un violín","Dentro del ataúd, en pleno velorio"],
+ ["Si fueras un sonido, ¿cuál serías?","Un gatito estornudando (y yo muriendo de ternura)","Una tiza en el tablero","Un módem de 1998 conectándose","El silencio después de “tenemos que hablar”"],
+ ["¿Qué le pondrías a la arepa de tu peor enemigo?","Doble queso. Que se ahogue en mi bondad","Sal… muchísima sal","Un tornillo y un poema","Nada. No merece arepa"],
+ ["¿Qué animal te gustaría que narrara tu vida?","Una ballena con voz de abuelita que me dice “mijito” a todo","Un loro que solo dice “te lo dije”","Un ajolote borracho","Un buitre muy paciente"],
+ ["Elige un superpoder inútil:","Que todos los perros del mundo me reconozcan como su humano","Saber la hora exacta pero nunca el día","Convertirte en silla por 4 segundos","Saber cuánta gente te odia en una habitación"],
+ ["¿Qué escribirías en tu lápida?","“Aquí yace alguien que siempre devolvía el carrito del súper”","“Les dije que estaba enfermo”","“Buscando wifi”","“Tú eres el siguiente”"],
+ ["¿A qué huele la tristeza?","A galleta que se partió dentro de la leche 😢","A lunes","A vela de cumpleaños apagada por un perro","A hospital un domingo"],
+ ["Si un pulpo te pidiera matrimonio, ¿qué le dirías?","Sí, y que los ocho brazos me abracen a la vez","¿Intenciones serias o solo tentáculos?","Solo si la boda es bajo el agua y en patineta","Que ya estoy comprometido con la soledad"],
+ ["¿Qué te llevarías a una isla desierta?","Mi peluche de la infancia (se llama Señor Bigotes y es mi abogado)","Un espejo, para tener con quién discutir","Una cabra con licencia de conducción","Una pala. Ya veremos para qué"],
+ ["¿Cuál es tu sopa emocional?","Sopa de letras que dicen “te quiero”, con faltas de ortografía","Caldo de “te lo advertí”","Sopa de crayones","Consomé de lágrimas de mis enemigos"],
+ ["Si reencarnaras en un objeto de oficina:","El post-it que dice “tú puedes”, pegado en la nevera desde 2019","La grapadora que nadie devuelve","El clip que se volvió consciente","La trituradora de documentos"],
+ ["Un fantasma te pide ayuda con su tesis. ¿Qué haces?","Le hago chocolatico y le arreglo la bibliografía en APA, con amor","Le digo que ni vivo terminé la mía","Le pido que me presente a Tesla","Le cobro en almas"],
+ ["El sabor de helado más prohibido:","Chicle de unicornio con lágrimas de felicidad","Café con decepción","Mayonesa con chispitas","Herencia en disputa"],
+ ["¿Qué le dirías a una ballena si pudiera entenderte?","Eres hermosa. ¿Puedo vivir en tu barriguita?","Bonito tamaño, ¿y la personalidad?","¿Me llevas a Marte?","Sé lo que le hiciste a Jonás"],
+ ["Tu vecino toca batería a las 3 a.m. ¿Qué haces?","Le llevo galletas, le pido clases y formamos una banda","Le aplaudo con sarcasmo desde la ventana","Saco mi gaita y le hago dueto","Empiezo a cavar en el jardín, sin explicar nada"],
  ["¿Cuál es el peor regalo de cumpleaños?","Un peluche que dice “te quiero” a las 4 a.m.","Una tarjeta que dice “¡cuánto has crecido!” a los 40","Un control remoto de nada","Un pez muerto en una caja de joyas"],
- ["¿En qué gastas tu último peso?","En un chicle para compartir","En una moneda al pozo para pedir plata","En un pato de hule con gorro de capitán","En pagarle al barquero del inframundo"],
- ["Si las nubes tuvieran sabor, ¿a qué sabrían?","Algodón de azúcar, obvio","A “ya casi llegamos”","A papel aluminio con canela","A sótano húmedo con secretos"],
- ["¿Cómo te gustaría salir de este planeta?","Abrazado por 100 cachorros","Aburrido, en una reunión que pudo ser un correo","Abducido por una vaca espacial","Dramáticamente, en una tormenta, señalando a alguien"],
+ ["¿En qué gastas tu último peso?","En un chicle… y lo parto en dos para compartir","En una moneda al pozo para pedir plata","En un pato de hule con gorro de capitán","En pagarle al barquero del inframundo"],
+ ["Si las nubes tuvieran sabor, ¿a qué sabrían?","A algodón de azúcar y domingo en casa de la abuela","A “ya casi llegamos”","A papel aluminio con canela","A sótano húmedo con secretos"],
+ ["¿Cómo te gustaría salir de este planeta?","Aplastado por 100 cachorros que me quieren demasiado","Aburrido, en una reunión que pudo ser un correo","Abducido por una vaca espacial","Dramáticamente, en una tormenta, señalando a alguien"],
  ["Encuentras un dedo en tu sopa. ¿Qué haces?","Le pongo nombre y lo adopto","Pido descuento","Pregunto por el resto del cuerpo","Lo devuelvo. Sé de quién es"],
- ["Tu playlist para el apocalipsis:","Canciones de cuna en flauta dulce","Reguetón triste de 2014","Cantos de ballena remixados con cumbia","Cantos gregorianos al revés"],
- ["¿Qué pez serías?","Un pez payaso que da abrazos","Un pez globo que se infla de indignación","Un pez que no sabe nadar y no le importa","Un pez abisal con linterna y malas intenciones"],
- ["¿Qué dirías en tu primera cita para impresionar?","“Me gustan los atardeceres y los patos”","“Tengo expectativas bajas, tranqui”","“¿Sabías que los pulpos tienen tres corazones?”","“Ya elegí el nombre de nuestros nietos y su epitafio”"],
- ["¿Qué superpoder tiene tu mamá?","Saber dónde está todo","Recordarte algo de 2009 en plena pelea","Teletransportar la chancla","Saber lo que hiciste antes de que lo hagas"],
- ["¿Qué comerías en tu última cena?","Arroz con leche de la abuela","Lo que sobre, igual ya qué","Cereal con jugo de naranja","El pastel de cumpleaños de mi enemigo"],
- ["Te persigue un ganso. ¿Qué haces?","Me rindo y le doy pan","Le explico que es un ganso y no tiene autoridad","Lo persigo yo a él","Acepto mi destino. Los gansos no perdonan"],
- ["¿Qué dice tu historial de búsqueda?","“Cómo adoptar 30 gatos”","“Cómo decir ‘según mi último correo’ sin sonar pasivo-agresivo”","“¿Las palomas tienen rodillas?”","“¿Cuánto cuesta un pantano?”"],
- ["Elige compañero de cuarto:","Un capibara zen","Un gato que te juzga","Un ajolote que hace stand-up","Un muñeco de porcelana que cambia de posición"],
- ["¿Qué te da más miedo?","Que se acabe el chocolate","Recibir un audio de 7 minutos","Las palomas que te sostienen la mirada","Que tu reflejo deje de imitarte"],
- ["Tu talento oculto es:","Dormir en cualquier parte","Decir “ok” en 14 tonos distintos","Hablar con las lavadoras","Adivinar quién muere primero en cualquier película"],
- ["Si fueras invisible un día, ¿qué harías?","Dejar notas bonitas a desconocidos","Colarme a reuniones a ver qué dicen de mí","Mover las sillas de un museo para confundir guardias","Susurrar “te estoy viendo” en bibliotecas"],
- ["Si tu vida fuera un documental de naturaleza:","“Las crías del koala”","“El perezoso y sus decisiones”","“El misterioso ritual del pájaro bobo”","“Hienas: la verdad que nadie quiere oír”"],
- ["¿Qué le darías de comer a un dragón?","Galletas de avena","Mis responsabilidades","Un carro viejo y una piñata","A mi jefe"],
- ["¿Cómo le pondrías a tu perro?","Pompón","Contribuyente","Licuadora Martínez","Lucifer Jr."],
- ["¿Qué le preguntarías a un fósil?","“¿Te dolió?”","“¿Tú también te extinguiste por no contestar mensajes?”","“¿Me prestas un hueso?”","“¿Qué se siente ser olvidado por millones de años?”"],
- ["¿Cómo duermes?","En bolita, como gato","Boca arriba, juzgando al techo","Estrella de mar en diagonal","Brazos cruzados, como faraón"],
- ["Te ofrecen trabajo en un circo. ¿De qué?","Haciendo perritos con globos","Crítico del circo","Bala humana","El payaso que nadie quiere ver de noche"],
- ["¿Con qué rellenarías una piñata?","Dulces y stickers","Facturas pendientes","Gelatina y un pollo de hule","Arañas. Vivas"],
- ["¿Qué haría tu yo de 5 años si te viera hoy?","Me daría un abrazo","Preguntaría “¿y el dinosaurio que íbamos a tener?”","Me mordería","Lloraría en silencio"],
- ["¿Qué tipo de nube eres?","Nube con forma de conejito","La nube que tapa el sol justo cuando sales","Nube con forma de tostadora","Nube de tormenta sobre un picnic"],
+ ["Tu playlist para el apocalipsis:","Canciones de cuna en flauta dulce, para que el apocalipsis duerma tranquilo","Reguetón triste de 2014","Cantos de ballena remixados con cumbia","Cantos gregorianos al revés"],
+ ["¿Qué pez serías?","Un pez payaso que da abrazos aunque no tenga brazos","Un pez globo que se infla de indignación","Un pez que no sabe nadar y no le importa","Un pez abisal con linterna y malas intenciones"],
+ ["¿Qué dirías en tu primera cita para impresionar?","“Te tejí una bufanda. Bueno, más bien una servilleta”","“Tengo expectativas bajas, tranqui”","“¿Sabías que los pulpos tienen tres corazones?”","“Ya elegí el nombre de nuestros nietos y su epitafio”"],
+ ["¿Qué superpoder tiene tu mamá?","Encontrar en 3 segundos lo que tú llevas una hora buscando","Recordarte algo de 2009 en plena pelea","Teletransportar la chancla","Saber lo que hiciste antes de que lo hagas"],
+ ["¿Qué comerías en tu última cena?","Arroz con leche de la abuela (y lloro mientras como)","Lo que sobre, igual ya qué","Cereal con jugo de naranja","El pastel de cumpleaños de mi enemigo"],
+ ["Te persigue un ganso. ¿Qué haces?","Me rindo, le doy pan y ahora es mi mejor amigo","Le explico que es un ganso y no tiene autoridad","Lo persigo yo a él","Acepto mi destino. Los gansos no perdonan"],
+ ["¿Qué dice tu historial de búsqueda?","“¿Los gatos sienten amor? Necesito saberlo hoy”","“Cómo decir ‘según mi último correo’ sin sonar pasivo-agresivo”","“¿Las palomas tienen rodillas?”","“¿Cuánto cuesta un pantano?”"],
+ ["Elige compañero de cuarto:","Un capibara zen que me prepara aromática","Un gato que te juzga","Un ajolote que hace stand-up","Un muñeco de porcelana que cambia de posición"],
+ ["¿Qué te da más miedo?","Que mi perro descubra que no soy perfecto","Recibir un audio de 7 minutos","Las palomas que te sostienen la mirada","Que tu reflejo deje de imitarte"],
+ ["Tu talento oculto es:","Dormirme en cualquier parte, incluso en mi propia fiesta","Decir “ok” en 14 tonos distintos","Hablar con las lavadoras","Adivinar quién muere primero en cualquier película"],
+ ["Si fueras invisible un día, ¿qué harías?","Dejar notas de “hoy te ves lindo” en espejos ajenos","Colarme a reuniones a ver qué dicen de mí","Mover las sillas de un museo para confundir guardias","Susurrar “te estoy viendo” en bibliotecas"],
+ ["Si tu vida fuera un documental de naturaleza:","“Las crías del koala: abrazos en peligro de extinción”","“El perezoso y sus decisiones”","“El misterioso ritual del pájaro bobo”","“Hienas: la verdad que nadie quiere oír”"],
+ ["¿Qué le darías de comer a un dragón?","Galletas de avena hechas por mí, con forma de dragoncito","Mis responsabilidades","Un carro viejo y una piñata","A mi jefe"],
+ ["¿Cómo le pondrías a tu perro?","Señor Pompón III","Contribuyente","Licuadora Martínez","Lucifer Jr."],
+ ["¿Qué le preguntarías a un fósil?","“¿Te dolió? ¿Quieres un abrazo? Te lo doy con cuidado”","“¿Tú también te extinguiste por no contestar mensajes?”","“¿Me prestas un hueso?”","“¿Qué se siente ser olvidado por millones de años?”"],
+ ["¿Cómo duermes?","En bolita, abrazado a un peluche que niego tener","Boca arriba, juzgando al techo","Estrella de mar en diagonal","Brazos cruzados, como faraón"],
+ ["Te ofrecen trabajo en un circo. ¿De qué?","Haciendo perritos con globos (y llorando cuando se revientan)","Crítico del circo","Bala humana","El payaso que nadie quiere ver de noche"],
+ ["¿Con qué rellenarías una piñata?","Dulces, stickers y cartas de autoestima","Facturas pendientes","Gelatina y un pollo de hule","Arañas. Vivas"],
+ ["¿Qué haría tu yo de 5 años si te viera hoy?","Me abrazaría y me prestaría su dinosaurio favorito","Preguntaría “¿y el dinosaurio que íbamos a tener?”","Me mordería","Lloraría en silencio"],
+ ["¿Qué tipo de nube eres?","Nube con forma de conejito que se deshace si la miras","La nube que tapa el sol justo cuando sales","Nube con forma de tostadora","Nube de tormenta sobre un picnic"],
  ["Si fueras un microorganismo, ¿cuál serías?","Una levadura que hace pan para todos","Una bacteria resistente a tus excusas","Un tardígrado que fue al espacio por diversión","Un hongo que controla hormigas"],
- ["¿Qué opinas de Fernando Cañamero?","Es un sol","Nadie lo pidió, pero ahí está","Creo que son tres palomas en un abrigo","Sabe demasiado"],
- ["Te quedas atrapado en un ascensor con 4 desconocidos:","Reparto galletas","Digo “qué buen plan” cada 5 minutos","Propongo montar una obra de teatro","Propongo votar a quién nos comemos primero"],
- ["Un genio te concede un deseo… con trampa:","Que todos los perros me saluden","Que me paguen en “experiencia”","Tener rodillas en los codos","Vivir para siempre… en el grupo de WhatsApp familiar"],
- ["¿Qué hay debajo de tu cama?","Un calcetín perdido y feliz","Mis sueños abandonados","Un portal a la dimensión de los patos","Algo que respira cuando apagas la luz"],
- ["¿Qué bicho gelatinoso serías?","Una medusa que brilla para dar ánimo","Una medusa sin cerebro pero con opiniones","Una medusa inmortal que se reinicia cuando se estresa","Una carabela portuguesa: bonita y letal"]
+ ["¿Qué opinas de Fernando Cañamero?","Es un sol y merece una estatua (de mazapán)","Nadie lo pidió, pero ahí está","Creo que son tres palomas en un abrigo","Sabe demasiado"],
+ ["Te quedas atrapado en un ascensor con 4 desconocidos:","Reparto galletas y organizo un círculo de abrazos","Digo “qué buen plan” cada 5 minutos","Propongo montar una obra de teatro","Propongo votar a quién nos comemos primero"],
+ ["Un genio te concede un deseo… con trampa:","Que todos los perros del mundo me saluden con la patita","Que me paguen en “experiencia”","Tener rodillas en los codos","Vivir para siempre… en el grupo de WhatsApp familiar"],
+ ["¿Qué hay debajo de tu cama?","Un calcetín perdido que por fin encontró el amor","Mis sueños abandonados","Un portal a la dimensión de los patos","Algo que respira cuando apagas la luz"],
+ ["¿Qué bicho gelatinoso serías?","Una medusa que brilla en la oscuridad para que no te dé miedo","Una medusa sin cerebro pero con opiniones","Una medusa inmortal que se reinicia cuando se estresa","Una carabela portuguesa: bonita y letal"]
 ];
 
 /* F(nombre, género, nombre científico, perfil DACO, rareza 1-4, forma, color1, color2, textura, remate, veredicto, ataque, debilidad, extras) */
 const FRUITS=[];let _id=0;
 function F(n,g,sci,p,r,sh,c1,c2,tx,tp,v,m,wk,x){FRUITS.push(Object.assign({id:++_id,n,g,sci,p:p.split('').map(Number),r,sh,c1,c2,tx,tp,v,m,wk},x||{}))}
-F("Fresa","f","Fragaria × ananassa","5000",1,"berry","#ff4d6d","#ffe066","seeds","calyx","Eres dulce, roja y con las semillas por fuera, como tus inseguridades. Fernando cree que eres demasiado buena para este mundo… y que eso te va a salir caro.","Abrazo con crema","La licuadora del lunes");
+F("Fresa","f","Fragaria × ananassa","2111",1,"berry","#ff4d6d","#ffe066","seeds","calyx","Eres dulce, roja y con las semillas por fuera, como tus inseguridades. Fernando cree que eres demasiado buena para este mundo… y que eso te va a salir caro.","Abrazo con crema","La licuadora del lunes");
 F("Mandarina","f","Citrus reticulata","4100",1,"round","#ff922b","#e8590c","dots","leaf","Fácil de pelar, imposible de olvidar: dejas olor en las manos durante tres días. Te abres con cualquiera y luego te quejas.","Gajo compartido","Uñas largas",{w:66,h:52});
 F("Banano","m","Musa × paradisiaca","4010",1,"banana","#ffd43b","#8d6e2f","dots","stem","Tienes la curva de la felicidad y la estabilidad emocional de un banano: en dos días eres una mancha negra que nadie quiere.","Cáscara traicionera","El paso del tiempo");
 F("Cereza","f","Prunus avium","4001",1,"cherry","#e03131","#ff8787","none","none","Siempre andas en pareja porque sola te da miedo. Dulce por fuera, con un hueso duro adentro que alguien se va a tragar sin querer.","Beso con hueso","Los pájaros");
@@ -76,8 +76,8 @@ F("Sandía","f","Citrullus lanatus","2120",1,"oval","#2f9e44","#8ce99a","stripes
 F("Higo","m","Ficus carica","2021",2,"drop","#6741d9","#b197fc","dots","stem","Pareces una fruta, pero técnicamente eres una flor al revés con avispas adentro. Fernando no sabe si quererte o llamar a un exorcista.","Avispa sorpresa","Que te googleen");
 F("Granada","f","Punica granatum","2102",2,"round","#c92a2a","#ff8787","dots","calyx","Por dentro tienes cientos de joyitas rojas y cero ganas de que te abran. Comerte es una cita de dos horas que termina con manchas en la ropa.","Explosión de rubíes","La ropa blanca",{cc:"#a61e4d"});
 F("Melón","m","Cucumis melo","2012",1,"round","#f2c46d","#b07d36","net","stem","Eres el relleno de toda ensalada de frutas: nadie te pidió, pero ahí estás. Fernando te tiene cariño, como a una silla vieja.","Rebanada sin invitación","Los niños",{w:64,h:58});
-F("Pera","f","Pyrus communis","2111",1,"pear","#a9e34b","#fab005","blush","leaf","Tienes forma de persona que se sentó demasiadas horas frente al computador. Equilibrada, discreta y sospechosamente normal.","Postura encorvada","Los lunes por la mañana");
-F("Limón","m","Citrus × limon","0500",1,"oval","#ffe066","#f59f00","dots","leaf","Ácido puro. Arruinas caras, curas guayabos y siempre tienes un comentario que arde en la herida. Fernando te admira y te teme.","Gota en la herida","Que te echen azúcar (pierdes identidad)",{w:62,h:46});
+F("Pera","f","Pyrus communis","1112",1,"pear","#a9e34b","#fab005","blush","leaf","Tienes forma de persona que se sentó demasiadas horas frente al computador. Equilibrada, discreta y sospechosamente normal.","Postura encorvada","Los lunes por la mañana");
+F("Limón","m","Citrus × limon","1211",1,"oval","#ffe066","#f59f00","dots","leaf","Ácido puro. Arruinas caras, curas guayabos y siempre tienes un comentario que arde en la herida. Fernando te admira y te teme.","Gota en la herida","Que te echen azúcar (pierdes identidad)",{w:62,h:46});
 F("Maracuyá","m","Passiflora edulis","1400",1,"round","#ffd43b","#f08c00","dots","stem","Arrugado por fuera como tu último ex, pero por dentro una bomba ácida de pepitas. Calmas los nervios de otros mientras los tuyos explotan.","Calmante con pepas","Que te juzguen por las arrugas");
 F("Lulo","m","Solanum quitoense","0410",2,"round","#ff922b","#ffd8a8","fuzz","calyx","Peludito, ácido y orgullosamente colombiano. Nadie fuera del país sabe qué eres, y tú tampoco haces mucho por explicarlo.","Pelusa urticante","Los extranjeros que te dicen “lolo”");
 F("Tomate de árbol","m","Solanum betaceum","0401",2,"tall","#e8590c","#c92a2a","blush","stem","Ni tomate ni árbol: eres una crisis de identidad con piel amarga. Fernando te recomienda terapia… y azúcar.","Piel amarga","Que te pregunten quién eres",{w:48,h:64});
@@ -95,7 +95,7 @@ F("Mano de Buda","f","Citrus medica var. sarcodactylis","0050",4,"hand","#ffd43b
 F("Pitahaya","f","Selenicereus undatus","1040",3,"tall","#e64980","#69db7c","bracts","none","Pareces un dragón, pero por dentro eres gelatina con pepas que deja el baño de colores raros. Drama visual puro.","Llamarada fucsia","Los que esperan sabor (decepción)",{w:54,h:62});
 F("Kiwano","m","Cucumis metuliferus","0140",3,"oval","#ff922b","#ffd8a8","spikes","none","Melón con cuernos, gelatina verde por dentro y sabor a pepino confundido. Pareces de otro planeta porque probablemente lo eres.","Cornada galáctica","Los bolsillos",{w:64,h:50,k:14,sl:18});
 F("Salak","m","Salacca zalacca","0041",4,"drop","#8a4b25","#4a2410","scales","none","Fruta serpiente: piel de culebra, sabor misterioso y actitud de “no me toques”. Fernando te tiene en la lista de sospechosos.","Mordida de serpiente","Los dedos sin guantes");
-F("Fruta milagrosa","f","Synsepalum dulcificum","2030",4,"tall","#e03131","#ff8787","none","leaf","No sabes a nada, pero haces que todo lo amargo parezca dulce. Básicamente eres un mecanismo de defensa con forma de fruta.","Engaño gustativo","La realidad cuando se pasa el efecto",{w:42,h:58});
+F("Fruta milagrosa","f","Synsepalum dulcificum","5000",4,"tall","#e03131","#ff8787","none","leaf","No sabes a nada, pero haces que todo lo amargo parezca dulce. Básicamente eres un mecanismo de defensa con forma de fruta.","Engaño gustativo","La realidad cuando se pasa el efecto",{w:42,h:58});
 F("Rambután","m","Nephelium lappaceum","0230",3,"round","#e03131","#94d82d","hairs","none","Eres un lichi que no se peinó. Peludo, rojo y con pinta de virus de documental, pero dulce por dentro.","Despeinada total","Las peinillas",{w:54,h:54});
 F("Jabuticaba","f","Plinia cauliflora","0032",4,"round","#5f2a84","#9775fa","dots","none","Creces pegada al tronco como si fueras una plaga y te pudres en tres días. Intensa, brillante y breve, como un amor de vacaciones.","Tronco infestado","Los calendarios",{w:54,h:54});
 F("Lichi","m","Litchi chinensis","1130",3,"round","#f06595","#c2255c","bumps","stem","Piel de dinosaurio, carne traslúcida y perfume de rosas sospechoso. Pelado pareces un globo ocular. Y lo sabes.","Mirada de ojo pelado","Las películas de terror",{w:54,h:58});
@@ -105,11 +105,15 @@ F("Zapote","m","Matisia cordata","1022",3,"oval","#a0703c","#7a5228","fuzz","cal
 F("Coco","m","Cocos nucifera","1121",1,"round","#8b5a2b","#5c3a1a","fuzz","none","Duro por fuera, agüita por dentro. Dicen por ahí que matas más gente que los tiburones. Fernando respeta tu silencio y tu caída libre.","Caída libre","Un machete con paciencia",{w:60,h:58});
 F("Durián","m","Durio zibethinus","0005",4,"oval","#a9c25d","#6e8b3d","spikes","stem","Te prohíben en hoteles y metros de varios países por tu olor. Oscuridad pura: los que te aman, te aman; el resto huye. Fernando usa tapabocas.","Aliento del inframundo","Los ascensores cerrados",{w:66,h:56,k:24,sl:13});
 F("Yaca","f","Artocarpus heterophyllus","1004",3,"tall","#b5c95a","#849a2e","bumps","stem","La fruta de árbol más grande del mundo: puedes pesar más de 30 kilos. Si caes sobre alguien, es homicidio. Dulce, pero letal por gravedad.","Gravedad asesina","Los cascos",{w:58,h:72});
-F("Noni","m","Morinda citrifolia","0104",4,"drop","#eef0b8","#b9bf76","bumps","none","Hueles a queso podrido y aun así te venden como milagro en frascos carísimos. El sarcasmo hecho fruta.","Aliento a queso","Las narices");
+F("Noni","m","Morinda citrifolia","0500",4,"drop","#eef0b8","#b9bf76","bumps","none","Hueles a queso podrido y aun así te venden como milagro en frascos carísimos. El sarcasmo hecho fruta.","Aliento a queso","Las narices");
 F("Borojó","m","Borojoa patinoi","0014",3,"round","#8b5a2b","#6b3e1e","dots","stem","Fruta del Pacífico: oscuro, denso y famoso por unos efectos “energizantes” que todos mencionan con picardía. Fernando no pregunta, solo anota.","Energía sospechosa","Las abuelas que saben",{w:60,h:60});
 F("Aguacate","m","Persea americana","2003",1,"drop","#3f8a2a","#2b5a1a","dots","stem","Técnicamente eres una baya, cuestas un riñón y te dañas justo el día que te iban a comer. La puntualidad de la tragedia.","Madurez a destiempo","Un hueso imposible de sacar");
 F("Chontaduro","m","Bactris gasipaes","0203",2,"bunch","#f76707","#ffc078","none","stem","Necesitas sal, miel y paciencia. Seco, fibroso y con fama de dar energía “de la buena”, según el señor de la esquina. Nadie te come por el sabor.","Atragantamiento seco","El agua (nunca hay suficiente)");
 F("Guanábana","f","Annona muricata","0023",2,"tall","#5aa14a","#2f6b25","spikes","stem","Pareces un dinosaurio verde con espinas de mentira, pero por dentro eres algodón ácido. Tu jugo cura todo… menos tu forma de ser.","Espinas de mentira","Las pepas tragadas por accidente",{w:56,h:68,k:20,sl:9});
+
+/* Pesos calibrados para repartir mejor los resultados (ver draw.js → pickFruit).
+   Las comunes salen más y las legendarias menos. Si añades una fruta nueva, su peso por defecto es 1. */
+const FRUIT_WEIGHTS={"Fresa": 0.588, "Mandarina": 8, "Banano": 8, "Cereza": 8, "Naranja": 8, "Mango": 7.139, "Durazno": 8, "Uva": 5.948, "Ciruela": 6.186, "Papaya": 5.392, "Piña": 1.431, "Manzana": 1.41, "Sandía": 0.88, "Higo": 0.545, "Granada": 0.64, "Melón": 0.74, "Pera": 0.2, "Limón": 0.258, "Maracuyá": 8, "Lulo": 2.382, "Tomate de árbol": 2.369, "Kiwi": 7.439, "Carambola": 0.484, "Curuba": 0.429, "Uchuva": 0.88, "Feijoa": 0.862, "Mamoncillo": 0.328, "Frambuesa": 0.388, "Granadilla": 0.2, "Arándano": 0.349, "Guayaba": 0.2, "Mano de Buda": 0.916, "Pitahaya": 0.629, "Kiwano": 0.366, "Salak": 0.2, "Fruta milagrosa": 8, "Rambután": 0.202, "Jabuticaba": 0.2, "Lichi": 0.204, "Mangostán": 0.2, "Cupuazú": 0.2, "Zapote": 0.2, "Coco": 0.2, "Durián": 0.584, "Yaca": 0.616, "Noni": 8, "Borojó": 0.2, "Aguacate": 2.018, "Chontaduro": 0.203, "Guanábana": 0.2};
 
 /* id estable de cada pregunta (sale del texto): si cambias una pregunta, cuenta como nueva */
 function qid(t){let h=5381;for(const c of t)h=((h<<5)+h+c.codePointAt(0))>>>0;return h.toString(36)}

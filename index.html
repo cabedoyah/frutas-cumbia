@@ -439,7 +439,7 @@ function renderHome(){const pick=shuffle(FRUITS.slice()).slice(0,3);
    ========================================================= */
 const N_Q=5;let S={qs:[],i:0,v:[0,0,0,0],lock:false};
 function startGame(){Sound.unlock();Sound.tap();track({t:"s"});
-  usedR=new Set();S={qs:shuffle(QUESTIONS.map((_,i)=>i)).slice(0,N_Q),i:0,v:[0,0,0,0],lock:false};show("s-quiz");renderQ()}
+  usedR=new Set();S={qs:shuffle(QUESTIONS.map((_,i)=>i)).slice(0,N_Q),i:0,v:[0,0,0,0],ans:[],lock:false};show("s-quiz");renderQ()}
 function renderQ(){const q=QUESTIONS[S.qs[S.i]];S.lock=false;
   $("#prog").innerHTML=Array.from({length:N_Q},(_,i)=>`<i class="${i<S.i?"done":i===S.i?"now":""}"></i>`).join("");
   const deco=FRUITS[Math.random()*FRUITS.length|0];
@@ -450,7 +450,7 @@ function renderQ(){const q=QUESTIONS[S.qs[S.i]];S.lock=false;
   $("#s-quiz").scrollTop=0}
 let advT=0,chosenAt=0;
 $("#opts").addEventListener("click",e=>{const b=e.target.closest(".opt");if(!b||S.lock)return;S.lock=true;chosenAt=Date.now();
-  const d=+b.dataset.d;S.v[d]++;track({t:"a",q:qid(QUESTIONS[S.qs[S.i]][0]),d});Sound.pop();if(navigator.vibrate)try{navigator.vibrate(15)}catch(_){}
+  const d=+b.dataset.d,id=qid(QUESTIONS[S.qs[S.i]][0]);S.v[d]++;S.ans.push(id+"."+d);track({t:"a",q:id,d});Sound.pop();if(navigator.vibrate)try{navigator.vibrate(15)}catch(_){}
   document.querySelectorAll(".opt").forEach(o=>o.classList.add(o===b?"chosen":"faded"));
   const txt=pickReaction(d),r=$("#react");r.innerHTML=`${txt}<small>toca para seguir 👆</small>`;r.classList.add("show");
   const dur=Math.min(4600,Math.max(2800,1700+txt.length*55));advT=setTimeout(advance,dur)});
@@ -461,12 +461,11 @@ $("#s-quiz").addEventListener("click",()=>{if(advT&&Date.now()-chosenAt>500)adva
 /* =========================================================
    PENSANDO → RESULTADO
    ========================================================= */
-function resultFor(v){const best=resultCandidates(v);return best[Math.random()*best.length|0]}
 function think(){show("s-think");const sample=shuffle(FRUITS.slice()).slice(0,4);
   $("#orb").innerHTML=sample.slice(0,3).map(f=>`<div>${fruitSVG(f)}</div>`).join("");$("#core").innerHTML=fruitSVG(sample[3],{noFace:false});
   const msgs=shuffle(THINK.slice());let k=0;const m=$("#thinkMsg");m.textContent=msgs[0];
   const it=setInterval(()=>{k++;m.textContent=msgs[k%msgs.length];Sound.tap()},850);
-  setTimeout(()=>{clearInterval(it);const fr=resultFor(S.v);track({t:"e",f:fr.n});reveal(fr,S.v)},3000)}
+  setTimeout(()=>{clearInterval(it);const fr=pickFruit(S.v,S.ans.slice().sort().join("|"));track({t:"e",f:fr.n});reveal(fr,S.v)},3000)}
 
 /* Huevo / semilla misteriosa */
 const EGG=`<svg viewBox="0 0 200 220"><defs><clipPath id="eggc"><path d="M100 18C152 18 176 104 170 144C164 186 136 204 100 204C64 204 36 186 30 144C24 104 48 18 100 18Z"/></clipPath></defs>

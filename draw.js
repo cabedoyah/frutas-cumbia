@@ -150,8 +150,24 @@ function cardHTML(f,v,owner){
   <div class="move"><span>🚫 Debilidad: ${f.wk}</span></div></div></div>`}
 
 
-/* Probabilidad teórica de cada fruta si alguien responde al azar (4 opciones × 5 preguntas = 1024 caminos) */
+/* =========================================================
+   CÓMO SE ELIGE LA FRUTA
+   1) Tus 5 respuestas dan un reparto (🍬,🍋,🌀,💀), p. ej. 1-2-0-2.
+   2) Candidatas: la fruta de ese reparto exacto (peso 10) y las que
+      difieren en una sola respuesta (peso 3), cada una × su peso calibrado.
+   3) Cuál sale lo deciden tus respuestas concretas (qué preguntas y qué
+      opciones): mismas respuestas → misma fruta; mismo reparto con otras
+      respuestas → puede salir una vecina.
+   ========================================================= */
+const KERNEL={0:10,2:3};
 function resultCandidates(v){let best=[],bd=1e9;FRUITS.forEach(f=>{const d=f.p.reduce((s,x,i)=>s+(x-v[i])**2,0);if(d<bd){bd=d;best=[f]}else if(d===bd)best.push(f)});return best}
+function fruitWeights(v){const W=(typeof FRUIT_WEIGHTS!=="undefined")?FRUIT_WEIGHTS:{},out=[];
+  FRUITS.forEach(f=>{const d=f.p.reduce((s,x,i)=>s+(x-v[i])**2,0),k=KERNEL[d];if(k)out.push([f,k*(W[f.n]||1)])});
+  if(!out.length)resultCandidates(v).forEach(f=>out.push([f,1]));return out}
+function hash01(str){let h=2166136261;for(const c of str){h^=c.codePointAt(0);h=Math.imul(h,16777619)}
+  h^=h>>>15;h=Math.imul(h,2246822507);h^=h>>>13;h=Math.imul(h,3266489909);h^=h>>>16;return(h>>>0)/4294967296}
+function pickFruit(v,seed){const w=fruitWeights(v),t=w.reduce((s,x)=>s+x[1],0);let r=hash01(seed)*t;for(const[f,x]of w){if((r-=x)<0)return f}return w[w.length-1][0]}
+/* Probabilidad teórica de cada fruta si alguien respondiera al azar */
 function fruitOdds(){const fact=n=>n<2?1:n*fact(n-1),P={};FRUITS.forEach(f=>P[f.n]=0);
-  for(let a=0;a<=5;a++)for(let b=0;a+b<=5;b++)for(let c=0;a+b+c<=5;c++){const d=5-a-b-c,p=fact(5)/(fact(a)*fact(b)*fact(c)*fact(d))/1024,best=resultCandidates([a,b,c,d]);
-    best.forEach(f=>P[f.n]+=p/best.length)}return P}
+  for(let a=0;a<=5;a++)for(let b=0;a+b<=5;b++)for(let c=0;a+b+c<=5;c++){const d=5-a-b-c,p=fact(5)/(fact(a)*fact(b)*fact(c)*fact(d))/1024,w=fruitWeights([a,b,c,d]),t=w.reduce((s,x)=>s+x[1],0);
+    w.forEach(([f,x])=>P[f.n]+=p*x/t)}return P}
