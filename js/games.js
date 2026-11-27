@@ -60,7 +60,7 @@ function findGame(opts={}){return new Promise(resolve=>{
   if(opts.dark){const fl=$("#flight");const mv=e=>{const r=area.getBoundingClientRect(),p=e.touches?e.touches[0]:e;fl.style.setProperty("--x",(p.clientX-r.left)+"px");fl.style.setProperty("--y",(p.clientY-r.top)+"px")};
     area.addEventListener("pointermove",mv);area.addEventListener("pointerdown",mv);area.addEventListener("touchmove",mv,{passive:true})}
   const end=win=>{if(done)return;done=true;clearInterval(tm);
-    setTimeout(()=>{g.querySelector(".g-wrap").insertAdjacentHTML("beforeend",`<div class="g-end box">${win?`🏆 ¡Lo encontraste todo con ${left|0}s de sobra!`:"⏰ Se acabó el tiempo. Fernando promete no contarle a nadie."}<br><button class="btn" id="fEnd">Continuar</button></div>`);
+    setTimeout(()=>{g.querySelector(".g-wrap").insertAdjacentHTML("beforeend",`<div class="g-end box">${win?`🏆 ¡Lo encontraste todo con ${left|0}s de sobra!`:"⏰ Se acabó el tiempo. El Dr. Cumbia promete no contarle a nadie."}<br><button class="btn" id="fEnd">Continuar</button></div>`);
       $("#fEnd").onclick=()=>{closeGame();resolve({win,left})};if(win)Sound.fanfare();else Sound.tone(200,.4,"sawtooth",.1,0,90)},400)};
   const tm=setInterval(()=>{left-=.1;$("#ftbar").style.width=Math.max(0,left/time*100)+"%";$("#ftnum").textContent=Math.max(0,Math.ceil(left))+"s";if(left<=0)end(false)},100);
   area.querySelector(".fitems").onclick=e=>{const b=e.target.closest(".fitem");if(!b||done||b.classList.contains("got"))return;const it=items[+b.dataset.i];
@@ -73,11 +73,11 @@ function fighterStats(c,lvl,isBoss){
   if(isBoss)return{hp:c.hp,atk:c.atk,def:c.def,crit:.06};
   const st=c.st;return{hp:Math.round(70+lvl*8+st.aguante*6),atk:8+lvl*1.2+st.fuerza*.9,def:6+lvl*.8+st.aguante*.6,crit:.05+st.suerte*.012};
 }
-function playerMoves(c){return[
-  {n:"Golpe de pipeta",pow:18,acc:95,txt:"te da con la pipeta"},
-  {n:c.sp.n,pow:30,acc:82,pp:5,txt:c.sp.txt,sp:1},
-  {n:"Excusa elaborada",eff:"guard",acc:100,txt:"pone una excusa tan buena que el próximo golpe dolerá la mitad"},
-  {n:"Respirar hondo",eff:"heal",pct:.22,acc:100,pp:3,txt:"respira hondo y recupera fuerzas"}]}
+function playerMoves(c){const m=c.mv;return[
+  {n:m[0].n,pow:18,acc:95,txt:m[0].txt,k:"golpe"},
+  {n:m[1].n,pow:30,acc:82,pp:5,txt:m[1].txt,sp:1,k:"⚡ especial"},
+  {n:m[2].n,eff:"guard",acc:100,txt:m[2].txt,k:"🛡️ defensa"},
+  {n:m[3].n,eff:"heal",pct:.22,acc:100,pp:3,txt:m[3].txt,k:"💚 cura"}]}
 function battleGame(opp,opts={}){return new Promise(resolve=>{
   const me=myChar(),lvl=levelOf(G.xp),isBoss=!!opts.boss;
   const P=fighterStats(me,lvl);P.hp+=G.items.usb?10:0;P.crit+=G.items.pipeta?.1:0;
@@ -106,7 +106,7 @@ function battleGame(opp,opts={}){return new Promise(resolve=>{
     if(m.eff==="charge"&&!mine&&!S.charge){S.charge={m,idx};anim(me_el,"glow");Sound.tone(220,.5,"sawtooth",.07,0,440);await say(`⚠️ ¡${name} está preparando algo grande! Defiéndete…`);return}
     if(m.eff==="heal"){const amt=Math.round((mine?P.hp*(m.pct||.22):O.hp*.15));if(mine)S.php=Math.min(P.hp,S.php+amt);else{S.ohp=Math.min(O.hp,S.ohp+amt);S.oheals++}
       pop(me_el,"+"+amt,"heal");Sound.tone(520,.3,"triangle",.12,0,880);hp();await say(`${name} recupera ${amt} PS.`);return}
-    if(m.eff==="guard"){if(mine)S.guard=true;else S.oguard=true;Sound.tone(600,.15,"triangle",.1);await say(`🛡️ ${name} se protege.`);return}
+    if(m.eff==="guard"){if(mine)S.guard=true;else S.oguard=true;Sound.tone(600,.15,"triangle",.1);await say(`🛡️ ${name} se protege: el próximo golpe dolerá la mitad.`);return}
     if(Math.random()*100>acc){Sound.tone(180,.15,"square",.06);await say(`¡Pero falló!`);return}
     if(m.eff==="stun"&&!mine){S.stun=true;anim(them_el,"hit");Sound.tone(150,.4,"sine",.15,0,80);await say(`😴 Te quedaste dormido… pierdes el siguiente turno.`);return}
     let mult=1;if(mine){if(S.beer)mult*=1.5;if(S.debuff)mult*=.75}else{if(S.guard){mult*=.5}if(G.items.sello)mult*=.9}
@@ -138,7 +138,7 @@ function battleGame(opp,opts={}){return new Promise(resolve=>{
     if(k==="cerveza"){S.beer=3;anim(el,"glow");Sound.tone(300,.4,"sawtooth",.08,0,600);await say("🍺 ¡Salud! Tu ataque sube ×1,5 durante 3 turnos… y tu puntería baja un poco.")}}
   function menu(on){const b=$("#bmenu");if(!on){b.innerHTML="";return}
     $("#bmsg").innerHTML=`¿Qué hará ${esc(G.name)}?`;
-    b.innerHTML=pm.map((m,i)=>`<button class="btn mv ${m.sp?"sp":""}" data-i="${i}" ${m.pp&&S.pp[i]<=0?"disabled":""}>${esc(m.n)}${m.pp?`<small>${S.pp[i]}/${m.pp}</small>`:""}</button>`).join("")+
+    b.innerHTML=pm.map((m,i)=>`<button class="btn mv ${m.sp?"sp":""}" data-i="${i}" ${m.pp&&S.pp[i]<=0?"disabled":""}>${esc(m.n)}<small>${m.k}${m.pp?` · ${S.pp[i]}/${m.pp}`:""}</small></button>`).join("")+
       `<button class="btn mv bag" data-bag="1">🎒 Mochila</button><button class="btn mv run" data-run="1">🏳️ Rendirse</button>`;
     b.onclick=async e=>{const t=e.target.closest(".mv");if(!t||t.disabled)return;Sound.tap();
       if(t.dataset.run){finish(false,true);return}

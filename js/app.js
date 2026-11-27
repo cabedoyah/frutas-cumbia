@@ -118,7 +118,7 @@ $("#selList").onclick=e=>{const b=e.target.closest(".sel-c");if(!b)return;Sound.
   $("#modalBox").innerHTML=`<div class="sel-big">${charSVG(c,{mood:"joy"})}</div><div class="rw-title">${c.id===G.char?"Tu personaje":"¿Eres tú?"}</div><p class="sel-tag">“${esc(c.tag)}”</p>
     <label class="sel-lab">¿Cómo te llamas en el juego?<input id="selName" maxlength="16" placeholder="Escribe tu nombre" value="${esc(G.char===c.id&&G.name?G.name:"")}"></label>
     ${bar("fuerza","💪 Fuerza")}${bar("aguante","🛡️ Aguante")}${bar("suerte","🍀 Suerte")}${bar("vista","👓 Vista")}
-    <p class="sel-sp">⚡ Ataque especial: <b>${esc(c.sp.n)}</b></p>
+    <p class="sel-sp">⚔️ Ataques: <b>${c.mv.map(m=>esc(m.n)).join("</b> · <b>")}</b></p>
     <div class="mbtns"><button class="btn ghost" id="selNo">Volver</button><button class="btn" id="selOk">¡Soy yo!</button></div>`;
   $("#selNo").onclick=()=>m.classList.remove("open");
   $("#selOk").onclick=async()=>{const nmv=$("#selName").value.trim();if(!nmv){toast("✍️ Escribe tu nombre para empezar");$("#selName").focus();return}
@@ -136,7 +136,9 @@ function renderMap(){const av=available(),marks={},locked={};
   const ch=chapterNow(),C=CHAPTERS[ch-1],list=MISSIONS.filter(m=>m.ch===ch);
   $("#objList").innerHTML=`<h3>Capítulo ${ch}: ${C.t}</h3>`+list.map(m=>{const d=isDone(m.id),a=av.includes(m);
     return`<div class="obj ${d?"done":a?"":"wait"}" data-room="${m.room}"><span>${d?"✅":a?"❗":"🔒"}</span><div><b>${esc(m.t)}</b><small>${esc(m.d)} · 📍 ${ROOMS[m.room].n}</small></div><em>${rwShort(m.rw)}</em></div>`}).join("")+
-    (G.ended?`<p class="note">🎓 Historia completada. Puedes seguir paseando, jugando y comprando cafés.</p>`:"");
+    (G.ended?`<p class="note">🎓 Historia completada. Puedes seguir paseando, jugando y comprando cafés.</p>`:"")+
+    `<div class="mbtns"><button class="btn small ghost" id="storyReset">🔄 Reiniciar modo historia</button></div>`;
+  $("#storyReset").onclick=resetStory;
   refreshHud()}
 const rwShort=r=>[r.xp?`⭐${r.xp}`:"",r.coins?`💰${r.coins}`:"",r.badge?BADGES[r.badge].e:"",...Object.keys(r.items||{}).map(k=>ITEMS[k].e)].filter(Boolean).join(" ");
 function placeMe(){const g=$("#me");if(!g)return;if(G.pos.floor!==G.view){g.innerHTML="";return}
@@ -189,7 +191,7 @@ $("#roomNpcs").onclick=async e=>{const b=e.target.closest(".npc");if(!b)return;S
   if(k===0){await talkTo(c)}if(k===1)await freeRps(c);if(k===2)await freeBattle(c)};
 async function talkTo(c){if(!G.talked.includes(c.id)){G.talked.push(c.id);save()}
   const m1=available().find(m=>m.type==="talk"&&m.npc===c.id);
-  if(m1&&c.id==="fernando"){await say(c,`¡Hola, ${G.name}! Te explico rápido: arriba están los laboratorios, la sala de becarios y los despachos de los profes. Abajo, la cafetería: allí Don Tinto vende café, empanadas y, los viernes, cerveza.`);
+  if(m1&&c.id==="fernando"){await say(c,`¡Hola, ${G.name}! Soy el Dr. Cumbia. Bueno, Fernando para los amigos. Te explico rápido: arriba están los laboratorios, la sala de becarios y los despachos de los profes. Abajo, la cafetería: allí Don Tinto vende café, empanadas y, los viernes, cerveza.`);
     await say(c,"Cada misión te da XP, monedas y objetos. Con monedas compras cosas que te salvan en las batallas contra los profesores. Y créeme: las vas a necesitar.");
     await say(c,"Ah, y otra cosa: algún día te diré qué fruta eres. Toma un café de bienvenida. ☕");await complete(m1)}
   else await converse(c)
@@ -263,14 +265,23 @@ function openBag(){const me=myChar(),l=levelOf(G.xp);
   $("#bagList").innerHTML=`<div class="bag-me box"><div class="bag-c">${charSVG(me)}</div><div><div class="rw-title">${esc(G.name)}</div><small>${TITLES[l-1]} · Nivel ${l} · ${G.xp} XP</small>
      <p>💰 ${G.coins} monedas<br>⚔️ ${G.st.won} victorias · ${G.st.lost} derrotas<br>☕ ${G.st.cafes} cafés · 🍺 ${G.st.cervezas} cervezas${G.fruit?`<br>🍍 Fruta: ${esc(G.fruit)}`:""}</p></div></div>
    <h3 class="sel-h">🎒 Objetos</h3>${items.length?items.map(([k,n])=>`<div class="ach on"><span>${ITEMS[k].e}</span><div><b>${ITEMS[k].n}${ITEMS[k].key?"":` ×${n}`}</b><small>${ITEMS[k].desc}</small></div></div>`).join(""):`<p class="note">Vacía. Compra cosas en la cafetería (planta baja).</p>`}
-   <h3 class="sel-h">⚙️ Partida</h3><button class="btn small ghost" id="resetBtn">🗑️ Empezar de cero</button>`;
-  show("s-bag");
+   <h3 class="sel-h">⚙️ Partida</h3><div class="mbtns" style="justify-content:flex-start;flex-wrap:wrap"><button class="btn small ghost" id="storyReset2">🔄 Reiniciar modo historia</button><button class="btn small ghost" id="resetBtn">🗑️ Empezar de cero</button></div>
+   <p class="note" style="text-align:left">“Reiniciar modo historia” conserva tu nivel, monedas y logros. “Empezar de cero” lo borra todo, incluido tu personaje.</p>`;
+  show("s-bag");$("#storyReset2").onclick=resetStory;
   let armed=0;$("#resetBtn").onclick=()=>{if(!armed){armed=1;$("#resetBtn").textContent="⚠️ ¿Seguro? Toca otra vez";setTimeout(()=>{armed=0;$("#resetBtn")&&($("#resetBtn").textContent="🗑️ Empezar de cero")},3000);return}
     localStorage.removeItem(SAVE_KEY);location.reload()}}
 
+/* ---------------- reiniciar el modo historia (conserva nivel, monedas y logros) ---------------- */
+async function resetStory(){Sound.tap();
+  const k=await say(charById("fernando"),"¿Reiniciar el modo historia? Se borran las misiones, los sellos de los profesores y los objetos especiales. Conservas tu nivel, tus monedas y tus logros.",["🔄 Sí, reiniciar","No, mejor no"]);
+  if(k!==0)return;
+  G.done=[];G.badges=[];G.seenCh=0;G.ended=false;G.ch=1;G.pos={floor:1,x:56,y:160};G.view=1;["pipeta","usb","sello"].forEach(i=>delete G.items[i]);save();
+  toast("🔄 Historia reiniciada. ¡Bienvenido/a otra vez al primer día de beca!");refreshHud();
+  if(CUR==="s-map"){renderMap();await chapterIntro()}else{openBag()}}
+
 /* ---------------- FINAL ---------------- */
 async function ending(){const me=myChar();
-  $("#endBox").innerHTML=`<div class="end-c">${charSVG(me,{mood:"joy",prop:"🎓"})}</div><h2 class="end-t">¡${esc(G.name)}, ya eres Doctor${art(me)==="a"?"a":""} Cumbia!</h2>
+  $("#endBox").innerHTML=`<div class="end-c">${charSVG(me,{mood:"joy",prop:"🎓"})}</div><h2 class="end-t">¡${esc(G.name)}, ya eres Doctor${art(me)==="a"?"a":""} Cum Laude!</h2>
    <p>Sobreviviste a la Dra. Deadline, al Dr. Revisor Nº 2, al Prof. Burocracia y al mismísimo Tribunal de Tesis.</p>
    <p class="note">Nivel ${levelOf(G.xp)} · ${G.st.cafes} cafés · ${G.st.won} batallas ganadas · ${G.ach.length} logros</p>
    <button class="btn" id="endOk">Seguir jugando</button>`;

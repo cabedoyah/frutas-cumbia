@@ -48,7 +48,7 @@ const TALKS={
     ["Sobrevivir al Dr. Revisor","Ambicioso. Me gusta la gente con metas realistas.",{t:"¿Ya le enviaste algo?",o:[
       ["Todavía no","Bien. Si no le envías nada, no te puede rechazar. Estrategia."],
       ["Sí, y me devolvió 74 comentarios","Solo 74. Te quiere. A mí me mandó 120 y un dibujo de una calavera."]]}],
-    ["Abrir una frutería","¿Con Fernando? Él ya sabe qué fruta es cada cliente."]]}],
+    ["Abrir una frutería","¿Con el Dr. Cumbia? Él ya sabe qué fruta es cada cliente."]]}],
  valeria:[
   {t:"Revisé tu póster. Solo cambié unas cositas.",o:[
     ["¡Gracias, eres lo máximo!","Lo sé. Cambié el título, las figuras, los colores… y tu nombre estaba mal escrito."],
@@ -106,10 +106,10 @@ const TALKS={
     ["Prefiero cerveza","Eso es los viernes. Hoy es… bueno, en espíritu es viernes."]]},
   {t:"Te veo con cara de tesis. ¿Cómo vas?",o:[
     ["Bien, avanzando","Qué bien. Eso decía yo… hace tres años."],
-    ["Mal, pero con estilo","Esa es la actitud. El estilo no se reprueba.",{t:"¿Quieres un consejo de Fernando?",o:[
+    ["Mal, pero con estilo","Esa es la actitud. El estilo no se reprueba.",{t:"¿Quieres un consejo del Dr. Cumbia?",o:[
       ["Sí, por favor","Nunca abras el correo un viernes a las 18:00. Nunca."],
       ["No, gracias","Bien. Mis consejos cuestan un café. Acabas de ahorrar."]]}],
-    ["¿Qué tesis?","Exacto. Si no la miras, no existe. Teoría de Fernando."]]}],
+    ["¿Qué tesis?","Exacto. Si no la miras, no existe. Teoría del Dr. Cumbia."]]}],
  paula:[
   {t:"Desde aquí abajo veo cosas que ustedes no. Por ejemplo: debajo de la mesa hay una galleta de 2021.",o:[
     ["¿Sigue ahí?","Sigue ahí. Ya es parte del edificio. Tiene nombre.",{t:"¿Adivinas cómo se llama?",o:[
@@ -146,7 +146,7 @@ const TALKS={
  marta:[
   {t:"Reservé el equipo para las 7 de la mañana. Lo voy a usar a las 11.",o:[
     ["¿Por qué tan temprano?","Para que nadie más lo use. Es estrategia, no madrugar."],
-    ["Eso es trampa","Se llama planificación. Trampa es lo de la camiseta azul de la suerte."],
+    ["Eso es trampa","Se llama planificación. Trampa es lo de Mister Azulejo con su camiseta de la suerte."],
     ["Yo lo reservo a las 6","Ajá. Y lo usarás a las 12. Te conozco.",{t:"¿Hacemos un trato?",o:[
       ["Lo compartimos","Trato. Tú las mañanas, yo… también las mañanas."],
       ["Que gane quien madrugue más","Acepto. Mi plan B es ponerte una alarma en el móvil a las 4."]]}]]},
@@ -173,7 +173,7 @@ const TALKS={
   {t:"Este viernes hay cervezas en la cafetería. ¿Vienes?",o:[
     ["¡Claro!","¡Así me gusta! Yo llevo el tema de conversación: quejarnos de los experimentos."],
     ["Tengo que trabajar","Nadie trabaja los viernes después de las 5. Es ley. No escrita, pero ley."],
-    ["Solo si invitas tú","Invito la primera… de agua. Las demás, que las pague Fernando."]]},
+    ["Solo si invitas tú","Invito la primera… de agua. Las demás, que las pague el Dr. Cumbia."]]},
   {t:"Estoy escribiendo la introducción de la tesis. Llevo tres semanas en la primera frase.",o:[
     ["¿Cuál es la frase?","“Desde tiempos inmemoriales…”. Y ahí me quedé. Inmemorialmente.",{t:"¿Me ayudas a seguirla?",o:[
       ["“…la humanidad ha tomado café”","¡Perfecto! Es verdad, es universal y me representa."],
@@ -183,6 +183,6 @@ const TALKS={
   {t:"¿Te has fijado que el microondas siempre tiene cola a la una?",o:[
     ["Yo voy a las 12:45, estratégico","Genio. Pero ahora lo sabe todo el mundo. Gracias por arruinarlo."],
     ["Yo como frío","Respeto. Eres de otra especie. Más evolucionada y más triste."],
-    ["Hagamos un horario en Excel","Ya existe. Lo hizo la de las gafas rojas. Nadie lo respeta."]]},
+    ["Hagamos un horario en Excel","Ya existe. Lo hizo Gloria Isabel. Nadie lo respeta."]]},
  ],
 };
