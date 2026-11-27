@@ -11,7 +11,7 @@ const beats=(a,b)=>(a===0&&b===2)||(a===1&&b===0)||(a===2&&b===1);
 function rpsGame(opp,opts={}){return new Promise(resolve=>{
   const me=myChar(),fav=strHash(opp.id)%3;let pw=0,ow=0,last=null,busy=false;
   const g=openGame(`<div class="g-wrap"><h2 class="g-title">Piedra, papel o tijera</h2><p class="g-sub">${esc(opts.stake||"Al mejor de 3")}</p>
-    <div class="rps-arena"><div class="rps-side"><div class="rps-ch">${charSVG(opp)}</div><b>${esc(opp.name)}</b><div class="hand opp" id="oh">✊</div></div>
+    <div class="rps-arena"><div class="rps-side"><div class="rps-ch">${charSVG(opp)}</div><b>${esc(nm(opp))}</b><div class="hand opp" id="oh">✊</div></div>
     <div class="rps-score"><span id="ps">0</span><small>–</small><span id="os">0</span></div>
     <div class="rps-side"><div class="rps-ch">${charSVG(me)}</div><b>${esc(G.name)}</b><div class="hand" id="mh">✊</div></div></div>
     <div class="g-msg box" id="rmsg">Elige tu jugada</div>
@@ -21,7 +21,7 @@ function rpsGame(opp,opts={}){return new Promise(resolve=>{
     const w=[1,1,1];w[fav]+=.9;const t=w[0]+w[1]+w[2];let r=Math.random()*t;for(let i=0;i<3;i++){if((r-=w[i])<0)return i}return 2};
   let next=oppPick();
   const hint=()=>{const p=.05+me.st.suerte*.045+(G.items.pipeta?.05:0);
-    if(Math.random()<p){const real=Math.random()<.8?next:(next+1+(Math.random()*2|0))%3;msg(`🔮 Presientes que ${esc(opp.name)} va a sacar <b>${RPS[real].n}</b>…`)}else msg("Elige tu jugada")};
+    if(Math.random()<p){const real=Math.random()<.8?next:(next+1+(Math.random()*2|0))%3;msg(`🔮 Presientes que ${esc(nm(opp,false))} va a sacar <b>${RPS[real].n}</b>…`)}else msg("Elige tu jugada")};
   hint();
   g.querySelector(".rps-btns").onclick=async e=>{const b=e.target.closest(".rps-b");if(!b||busy)return;busy=true;
     const mine=+b.dataset.k,theirs=next;Sound.tap();
@@ -30,12 +30,12 @@ function rpsGame(opp,opts={}){return new Promise(resolve=>{
     oh.textContent=RPS[theirs].e;mh.textContent=RPS[mine].e;
     if(mine===theirs){msg("¡Empate! Otra vez.");Sound.tone(300,.15,"triangle",.1)}
     else if(beats(mine,theirs)){pw++;msg(`¡Ganaste la ronda! ${RPS[mine].n} gana a ${RPS[theirs].n}.`);Sound.pop()}
-    else{ow++;msg(`${esc(opp.name)} gana la ronda. ${RPS[theirs].n} gana a ${RPS[mine].n}.`);Sound.tone(220,.25,"sawtooth",.08,0,140)}
+    else{ow++;msg(`${esc(nm(opp))} gana la ronda. ${RPS[theirs].n} gana a ${RPS[mine].n}.`);Sound.tone(220,.25,"sawtooth",.08,0,140)}
     $("#ps").textContent=pw;$("#os").textContent=ow;last=mine;next=oppPick();
     await sleep(1100);
     if(pw===2||ow===2){const win=pw===2;
       g.querySelector(".rps-btns").innerHTML=`<button class="btn" id="rpsEnd">${win?"¡Victoria! Continuar":"Continuar"}</button>`;
-      msg(win?`🏆 ¡Le ganaste a ${esc(opp.name)}!`:`😵 ${esc(opp.name)}: “${esc(pick(["Otra vez será.","Practica más, becario.","Yo siempre saco eso, era obvio."]))}”`);
+      msg(win?`🏆 ¡Le ganaste a ${esc(nm(opp,false))}!`:`😵 ${esc(nm(opp))}: “${esc(pick(["Otra vez será.","Practica más, becario.","Yo siempre saco eso, era obvio."]))}”`);
       if(win)Sound.fanfare();
       $("#rpsEnd").onclick=()=>{closeGame();resolve({win})};return}
     busy=false;hint()};
@@ -86,7 +86,7 @@ function battleGame(opp,opts={}){return new Promise(resolve=>{
   const S={php:P.hp,ohp:O.hp,guard:false,stun:false,debuff:0,beer:0,charge:null,oheals:0,opp:{},pp:{},taken:0};
   pm.forEach((m,i)=>{if(m.pp)S.pp[i]=m.pp});om.forEach((m,i)=>{if(m.pp)S.opp[i]=m.pp});
   const g=openGame(`<div class="g-wrap"><div class="bt-field">
-     <div class="bt-row top"><div class="bt-info box"><b>${esc(opp.name)}</b>${opp.title?`<small>${esc(opp.title)}</small>`:""}<div class="hpbar"><i id="ohb"></i></div><span id="ohn"></span></div>
+     <div class="bt-row top"><div class="bt-info box"><b>${esc(nm(opp))}</b>${opp.title||opp.tag?`<small>${esc(opp.title||opp.tag)}</small>`:""}<div class="hpbar"><i id="ohb"></i></div><span id="ohn"></span></div>
        <div class="bt-sprite ${opp.trio?"trio":""}" id="oS">${anySVG(opp,{mood:isBoss?"angry":"happy"})}<div class="plat"></div></div></div>
      <div class="bt-row bot"><div class="bt-sprite me" id="mS">${charSVG(me)}<div class="plat"></div></div>
        <div class="bt-info box"><b>${esc(G.name)}</b><small>Nivel ${lvl}</small><div class="hpbar"><i id="mhb"></i></div><span id="mhn"></span></div></div></div>
@@ -99,7 +99,7 @@ function battleGame(opp,opts={}){return new Promise(resolve=>{
   const dmgCalc=(pow,a,d,crit,mult)=>{const isC=Math.random()<crit;let v=pow*(a/(a+d))*2*(.85+Math.random()*.15)*mult*(isC?1.6:1);return{v:Math.max(1,Math.round(v)),isC}};
   hp();
   async function act(who,m,idx){
-    const mine=who==="me",A=mine?P:O,D=mine?O:P,name=mine?esc(G.name):esc(opp.name),me_el=$(mine?"#mS":"#oS"),them_el=$(mine?"#oS":"#mS");
+    const mine=who==="me",A=mine?P:O,D=mine?O:P,name=mine?esc(G.name):esc(nm(opp)),me_el=$(mine?"#mS":"#oS"),them_el=$(mine?"#oS":"#mS");
     if(mine&&m.pp){S.pp[idx]--}if(!mine&&m.pp){S.opp[idx]--}
     await say(`${name} usó <b>${esc(m.n)}</b>${m.txt?`: ${esc(m.txt)}`:""}.`);
     let acc=m.acc;if(mine&&S.beer)acc-=15;
@@ -149,9 +149,9 @@ function battleGame(opp,opts={}){return new Promise(resolve=>{
       turn(+t.dataset.i)}}
   async function finish(win,ran){menu(false);
     $("#oS").innerHTML=anySVG(opp,{mood:win?"ko":"joy"})+'<div class="plat"></div>';$("#mS").innerHTML=charSVG(me,{mood:win?"joy":"ko"})+'<div class="plat"></div>';
-    if(win){Sound.fanfare();await say(isBoss?`${esc(opp.name)}: “${esc(opp.win)}”`:`🏆 ¡Le ganaste a ${esc(opp.name)}!`)}
-    else{Sound.tone(260,.6,"sawtooth",.1,0,90);await say(ran?"Te retiras con dignidad. Más o menos.":(isBoss?`${esc(opp.name)}: “${esc(opp.lose)}”`:`😵 ${esc(opp.name)} te ganó esta vez.`))}
+    if(win){Sound.fanfare();await say(isBoss?`${esc(nm(opp))}: “${esc(opp.win)}”`:`🏆 ¡Le ganaste a ${esc(nm(opp,false))}!`)}
+    else{Sound.tone(260,.6,"sawtooth",.1,0,90);await say(ran?"Te retiras con dignidad. Más o menos.":(isBoss?`${esc(nm(opp))}: “${esc(opp.lose)}”`:`😵 ${esc(nm(opp))} te ganó esta vez.`))}
     $("#bmenu").innerHTML=`<button class="btn" id="bEnd">Continuar</button>`;
     $("#bEnd").onclick=()=>{closeGame();resolve({win,flawless:win&&S.taken===0})}}
-  (async()=>{menu(false);if(opts.intro)await say(`${esc(opp.name)}: “${esc(opts.intro)}”`);else await say(`¡${esc(opp.name)} te reta a una batalla!`);menu(true)})();
+  (async()=>{menu(false);if(opts.intro)await say(`${esc(nm(opp))}: “${esc(opts.intro)}”`);else await say(`¡${esc(nm(opp))} te reta a una batalla!`);menu(true)})();
 })}

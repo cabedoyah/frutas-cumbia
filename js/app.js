@@ -25,7 +25,7 @@ function show(id){$$(".screen").forEach(s=>s.classList.toggle("active",s.id===id
   const sc=$("#"+id);sc&&(sc.scrollTop=0);CUR=id}
 let CUR="s-hub";
 function hud(){const l=levelOf(G.xp),a=LEVELS[l-1],b=LEVELS[l]||a+1000,me=myChar();
-  return`<div class="hud box"><div class="hud-face">${charSVG(me,{head:true})}</div><div class="hud-main"><b>${esc(G.name||me.name)}</b><small>Nv. ${l} · ${TITLES[l-1]}</small>
+  return`<div class="hud box"><div class="hud-face">${charSVG(me,{head:true})}</div><div class="hud-main"><b>${esc(G.name)}</b><small>Nv. ${l} · ${TITLES[l-1]}</small>
     <div class="xpbar"><i style="width:${Math.min(100,(G.xp-a)/(b-a)*100)}%"></i></div></div><div class="hud-coins">💰 ${G.coins}</div></div>`}
 function refreshHud(){$$(".hud-slot").forEach(h=>h.innerHTML=G.char?hud():"")}
 
@@ -44,7 +44,7 @@ function loopFx(){const d=window.devicePixelRatio||1,W=fx.width/d,H=fx.height/d;
 /* ---------------- diálogos ---------------- */
 function say(c,text,choices){return new Promise(res=>{
   const d=$("#dlg");d.classList.add("open");
-  $("#dlgFace").innerHTML=c?anySVG(c,{head:!c.trio}):"";$("#dlgName").textContent=c?(c.id===G.char?G.name:c.name):"";
+  $("#dlgFace").innerHTML=c?anySVG(c,{head:!c.trio}):"";$("#dlgName").textContent=c?(c.id===G.char?G.name:(c.name||"Colega")):"";
   const p=$("#dlgText"),ch=$("#dlgCh");ch.innerHTML="";p.textContent="";let i=0,typing=true;
   const full=text;const tick=setInterval(()=>{i+=2;p.textContent=full.slice(0,i);if(i>=full.length){clearInterval(tick);typing=false;showCh()}},22);
   function showCh(){if(choices&&choices.length){ch.innerHTML=choices.map((t,k)=>`<button class="btn small ${k?"ghost":""}" data-k="${k}">${t}</button>`).join("");
@@ -110,19 +110,19 @@ $("#hubMenu").onclick=e=>{const b=e.target.closest("[data-go]");if(!b)return;Sou
   if(g==="story")openMap();if(g==="mini")openMini();if(g==="ach")openAch();if(g==="bag")openBag();if(g==="char")openSelect()};
 
 /* ---------------- SELECCIÓN DE PERSONAJE ---------------- */
-function openSelect(){const grp=(room,t)=>`<h3 class="sel-h">${t}</h3><div class="sel-grid">${ROSTER.filter(c=>c.room===room).map(c=>
-    `<button class="sel-c ${c.id===G.char?"on":""}" data-id="${c.id}">${charSVG(c)}<b>${esc(c.name)}</b></button>`).join("")}</div>`;
-  $("#selList").innerHTML=grp("becarios","🛋️ Sala de becarios")+grp("est","💻 Oficina de estudiantes");show("s-select")}
+function openSelect(){$("#selList").innerHTML=`<div class="sel-grid">${ROSTER.map(c=>
+    `<button class="sel-c ${c.id===G.char?"on":""}" data-id="${c.id}" aria-label="Personaje">${charSVG(c)}</button>`).join("")}</div>`;show("s-select")}
 $("#selList").onclick=e=>{const b=e.target.closest(".sel-c");if(!b)return;Sound.tap();const c=ROSTER.find(x=>x.id===b.dataset.id);
   const bar=(k,lab)=>`<div class="stat"><span>${lab}</span><div class="sbar"><i style="width:${c.st[k]*10}%"></i></div><b>${c.st[k]}</b></div>`;
   const m=$("#modal");m.classList.add("open");
-  $("#modalBox").innerHTML=`<div class="sel-big">${charSVG(c,{mood:"joy"})}</div><div class="rw-title">${esc(c.name)}</div><p class="sel-tag">“${esc(c.tag)}”</p>
-    <label class="sel-lab">¿Cómo te llamas en el juego?<input id="selName" maxlength="16" value="${esc(G.char===c.id&&G.name?G.name:c.name)}"></label>
+  $("#modalBox").innerHTML=`<div class="sel-big">${charSVG(c,{mood:"joy"})}</div><div class="rw-title">${c.id===G.char?"Tu personaje":"¿Eres tú?"}</div><p class="sel-tag">“${esc(c.tag)}”</p>
+    <label class="sel-lab">¿Cómo te llamas en el juego?<input id="selName" maxlength="16" placeholder="Escribe tu nombre" value="${esc(G.char===c.id&&G.name?G.name:"")}"></label>
     ${bar("fuerza","💪 Fuerza")}${bar("aguante","🛡️ Aguante")}${bar("suerte","🍀 Suerte")}${bar("vista","👓 Vista")}
     <p class="sel-sp">⚡ Ataque especial: <b>${esc(c.sp.n)}</b></p>
     <div class="mbtns"><button class="btn ghost" id="selNo">Volver</button><button class="btn" id="selOk">¡Soy yo!</button></div>`;
   $("#selNo").onclick=()=>m.classList.remove("open");
-  $("#selOk").onclick=async()=>{const first=!G.char;G.char=c.id;G.name=($("#selName").value.trim()||c.name).slice(0,16);save();m.classList.remove("open");Sound.pop();
+  $("#selOk").onclick=async()=>{const nmv=$("#selName").value.trim();if(!nmv){toast("✍️ Escribe tu nombre para empezar");$("#selName").focus();return}
+    const first=!G.char;G.char=c.id;G.name=nmv.slice(0,16);save();m.classList.remove("open");Sound.pop();
     renderHub();show("s-hub");
     if(first){await say(charById("fernando"),`¡Bienvenid${art(c)} al Lab Cumbia, ${G.name}! Aquí hay laboratorios, profesores temibles y una cafetería donde se arregla todo con café. Empieza por el modo historia.`);await chapterIntro()}}};
 
@@ -174,7 +174,7 @@ function npcsIn(id){const r=ROOMS[id],others=ROSTER.filter(c=>c.id!==G.char);
 function enterRoom(id){ROOM=id;if(!G.visited.includes(id)){G.visited.push(id);save()}
   const r=ROOMS[id];$("#roomName").textContent=r.n;$("#roomScene").innerHTML=sceneSVG(r.type,id);
   const npcs=npcsIn(id);
-  $("#roomNpcs").innerHTML=npcs.map(c=>`<button class="npc ${c.trio?"trio":""}" data-id="${c.id}" title="${esc(c.name)}">${anySVG(c,{mood:BOSSES[c.id]?"angry":"happy"})}<span>${esc(c.name)}</span></button>`).join("");
+  $("#roomNpcs").innerHTML=npcs.map(c=>`<button class="npc ${c.trio?"trio":""}" data-id="${c.id}" aria-label="${esc(nm(c))}">${anySVG(c,{mood:BOSSES[c.id]?"angry":"happy"})}${c.name?`<span>${esc(c.name)}</span>`:""}</button>`).join("");
   renderRoomActions();show("s-room");Sound.tone(660,.08,"triangle",.08);checkAch()}
 function renderRoomActions(){const id=ROOM,ms=available().filter(m=>m.room===id);
   let h=ms.map(m=>`<button class="btn act" data-m="${m.id}">❗ ${esc(m.t)}<small>${esc(m.d)}</small></button>`).join("");

@@ -1,6 +1,7 @@
 /* =========================================================
    PERSONAJES
-   👉 Cambia aquí los nombres (name), frases (lines) y aspecto (look).
+   👉 Los personajes no tienen nombre: cada jugador escribe el suyo al elegir.
+   Aquí puedes cambiar sus frases (lines), lema (tag) y aspecto (look).
    look: skin (piel) · hs (peinado: afro|curly|short|short2|long|ponytail|bun|fern|bald)
          hc (color de pelo) · gl (gafas: round|thin|red|cat|thick) · gc (color gafas)
          h (altura, 1 = normal) · w (anchura) · top (camiseta) · pants · coat (bata)
@@ -9,35 +10,35 @@
    ========================================================= */
 const ROSTER=[
   // ---- Sala de becarios ----
-  {id:"samuel",name:"Samuel",room:"becarios",tag:"Ritmo en las venas",
+  {id:"samuel",room:"becarios",tag:"Ritmo en las venas",
    look:{skin:"#7b4a2d",hs:"afro",hc:"#1b1512",top:"#ffd43b",pants:"#364fc7"},
    st:{fuerza:7,aguante:6,suerte:5,vista:4},sp:{n:"Paso de cumbia",txt:"se marca un paso de cumbia imposible de seguir"},
    lines:["¿Ya almorzaste? Yo ya, dos veces.","Si el experimento no sale, se le pone música.","Mi código funciona. No sé por qué, pero funciona."]},
-  {id:"mateo",name:"Mateo",room:"becarios",tag:"Abrazos y arepas",
+  {id:"mateo",room:"becarios",tag:"Abrazos y arepas",
    look:{skin:"#f1c27d",hs:"short",hc:"#4a2c1d",w:1.35,top:"#ff8787",pants:"#495057"},
    st:{fuerza:6,aguante:9,suerte:4,vista:3},sp:{n:"Abrazo de oso",txt:"da un abrazo de oso que nadie pidió"},
    lines:["Traje arepas para todos. Bueno, para mí, y si sobra…","El secreto de la ciencia es la siesta.","¿Quién se comió mi yogur de la nevera? Tengo sospechosos."]},
-  {id:"julian",name:"Julián",room:"becarios",tag:"Ve todo desde arriba",
+  {id:"julian",room:"becarios",tag:"Ve todo desde arriba",
    look:{skin:"#e8b98a",hs:"short2",hc:"#2b1d14",gl:"round",gc:"#2b2d42",h:1.18,top:"#69db7c",pants:"#343a40"},
    st:{fuerza:5,aguante:5,suerte:4,vista:8},sp:{n:"Mirada desde arriba",txt:"te mira desde 1,90 m con decepción"},
    lines:["Desde aquí arriba veo todos tus errores de ortografía.","Me pegué con la lámpara otra vez.","Revisé tu gráfica. Le falta la leyenda… y el sentido."]},
-  {id:"lucia",name:"Lucía",room:"becarios",tag:"Brilla hasta en el sótano",
+  {id:"lucia",room:"becarios",tag:"Brilla hasta en el sótano",
    look:{skin:"#ffe0bd",hs:"long",hc:"#f2c14e",fem:1,top:"#da77f2",pants:"#5f3dc4"},
    st:{fuerza:5,aguante:5,suerte:8,vista:4},sp:{n:"Destello dorado",txt:"se acomoda el pelo y deslumbra a todos"},
    lines:["¿Alguien ha visto mi bata? Ah, la tengo puesta.","Hoy el café sabe a desesperación. Me gusta.","Mi plan: publicar, dormir, repetir."]},
-  {id:"valeria",name:"Valeria",room:"becarios",tag:"Detecta errores a 10 metros",
+  {id:"valeria",room:"becarios",tag:"Detecta errores a 10 metros",
    look:{skin:"#f3c89f",hs:"ponytail",hc:"#3b2416",gl:"red",fem:1,top:"#4dabf7",pants:"#343a40"},
    st:{fuerza:6,aguante:4,suerte:5,vista:7},sp:{n:"Mirada láser roja",txt:"te escanea con sus gafas rojas"},
    lines:["Estas gafas rojas detectan mentiras y faltas de ortografía.","Corregí tu póster. Ya no queda nada del original.","Si no está en Excel, no existe."]},
-  {id:"sofia",name:"Sofía",room:"becarios",tag:"Pequeña pero peligrosa",
+  {id:"sofia",room:"becarios",tag:"Pequeña pero peligrosa",
    look:{skin:"#f5cfa0",hs:"bun",hc:"#5a3825",fem:1,h:.86,top:"#ffa94d",pants:"#1864ab"},
    st:{fuerza:7,aguante:4,suerte:6,vista:5},sp:{n:"Ataque sorpresa",txt:"aparece de la nada (nadie la vio venir)"},
    lines:["Soy pequeña pero llego a todo. Con escalera.","La centrífuga y yo tenemos una relación complicada.","No me subestimes: muerdo papers."]},
-  {id:"diego",name:"Diego",room:"becarios",tag:"47 pestañas abiertas",
+  {id:"diego",room:"becarios",tag:"47 pestañas abiertas",
    look:{skin:"#eac08f",hs:"short2",hc:"#1f1a17",gl:"thin",w:.84,top:"#a9e34b",pants:"#495057"},
    st:{fuerza:4,aguante:4,suerte:6,vista:8},sp:{n:"Cita bibliográfica",txt:"te lanza 40 referencias en formato APA"},
    lines:["Citando a mi otro yo: “eso no es significativo”.","Tengo 47 pestañas abiertas y todas son importantes.","Mi dieta: café y pánico."]},
-  {id:"tomas",name:"Tomás",room:"becarios",tag:"Rizos con electricidad",
+  {id:"tomas",room:"becarios",tag:"Rizos con electricidad",
    look:{skin:"#e9b98e",hs:"curly",hc:"#3d2a1e",top:"#f783ac",pants:"#364fc7"},
    st:{fuerza:6,aguante:6,suerte:6,vista:4},sp:{n:"Rizo eléctrico",txt:"carga electricidad estática en los rizos y ¡zas!"},
    lines:["Mi pelo predice la humedad mejor que el higrómetro.","¿Repetimos el experimento? Ya van 14.","Esto es ciencia: nadie sabe nada, pero con estilo."]},
@@ -46,19 +47,19 @@ const ROSTER=[
    look:{skin:"#ffd8a8",hs:"fern",hc:"#5c3d2e",gl:"round",gc:"#2b2d42",must:"#5c3d2e",coat:1,top:"#74c0fc",pants:"#343a40"},
    st:{fuerza:6,aguante:6,suerte:7,vista:6},sp:{n:"Veredicto frutal",txt:"te dice qué fruta eres y te duele"},
    lines:["Yo sé qué fruta eres. Tú todavía no.","El café de abajo es 70% agua y 30% fe.","Los profesores no muerden. Bueno, una sí.","Si me buscan, estoy en el laboratorio. Si no, también."]},
-  {id:"paula",name:"Paula",room:"est",tag:"Bajita, imparable",
+  {id:"paula",room:"est",tag:"Bajita, imparable",
    look:{skin:"#f6d2a8",hs:"long",hc:"#2b1a12",fem:1,h:.72,top:"#ff6b6b",pants:"#343a40"},
    st:{fuerza:6,aguante:4,suerte:7,vista:6},sp:{n:"Ataque al tobillo",txt:"ataca donde nadie mira: el tobillo"},
    lines:["Desde aquí abajo veo cosas que ustedes no.","No alcanzo el estante, pero alcanzo mis metas.","Me escondí en el armario de reactivos y nadie lo notó en 3 horas."]},
-  {id:"nico",name:"Nico",room:"est",tag:"La camiseta azul de la suerte",
+  {id:"nico",room:"est",tag:"La camiseta azul de la suerte",
    look:{skin:"#efc49a",hs:"short",hc:"#3b2a1d",h:.86,top:"#1c7ed6",pants:"#495057"},
    st:{fuerza:5,aguante:5,suerte:8,vista:5},sp:{n:"Ola azul",txt:"desata una ola azul de pura buena suerte"},
    lines:["Esta camiseta azul es mi uniforme de la suerte.","Tengo un plan perfecto. Bueno, un plan.","¿Alguien quiere mi turno en el microscopio? Lo ofrezco una sola vez."]},
-  {id:"alex",name:"Álex",room:"est",tag:"Cambia bombillas sin escalera",
+  {id:"alex",room:"est",tag:"Cambia bombillas sin escalera",
    look:{skin:"#d9a679",hs:"short2",hc:"#20160f",h:1.2,top:"#868e96",pants:"#212529"},
    st:{fuerza:7,aguante:7,suerte:4,vista:5},sp:{n:"Bloqueo de altura",txt:"levanta el brazo y nadie alcanza nada"},
    lines:["Si necesitas algo del estante de arriba, cobro en galletas.","Mi superpoder: cambiar bombillas sin escalera.","Me agacho para entrar al laboratorio. Por respeto."]},
-  {id:"marta",name:"Marta",room:"est",tag:"Siempre tiene un plan B",
+  {id:"marta",room:"est",tag:"Siempre tiene un plan B",
    look:{skin:"#f0c8a0",hs:"long",hc:"#8a3b1d",fem:1,top:"#20c997",pants:"#343a40"},
    st:{fuerza:5,aguante:6,suerte:6,vista:6},sp:{n:"Plan B",txt:"saca un plan B, C y D de la manga"},
    lines:["Tengo un plan B, un plan C y un café.","Reservé el equipo para las 7 a.m. Lo usaré a las 11.","¿Seminario a las 9? Mi alma llega a las 10."]},
@@ -106,6 +107,9 @@ const BOSSES={
            {n:"¿Y el estado del arte?",pow:12,acc:100,eff:"debuff",txt:"pregunta por el estado del arte"}]},
 };
 
+/* Cómo se nombra a alguien en los textos: tu nombre si es tu personaje, su nombre si lo tiene
+   (Fernando, Don Tinto, profesores) o “tu colega” */
+function nm(c,cap=true){const t=c.id===G.char?G.name:(c.name||"tu colega");return cap?t.charAt(0).toUpperCase()+t.slice(1):t}
 const ALL_CHARS=[...ROSTER,BARISTA,...Object.values(BOSSES).filter(b=>!b.trio)];
 const charById=id=>ALL_CHARS.find(c=>c.id===id)||BOSSES[id];
 
