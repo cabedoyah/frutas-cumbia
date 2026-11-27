@@ -2,7 +2,7 @@
    PERSONAJES
    👉 Los personajes no tienen nombre: cada jugador escribe el suyo al elegir.
    Aquí puedes cambiar sus frases (lines), lema (tag) y aspecto (look).
-   look: skin (piel) · hs (peinado: afro|curly|short|short2|long|ponytail|bun|fern|bald)
+   look: skin (piel) · hs (peinado: none|afro|curly|short|short2|long|ponytail|bun|fern|bald)
          hc (color de pelo) · gl (gafas: round|thin|red|cat|thick) · gc (color gafas)
          h (altura, 1 = normal) · w (anchura) · top (camiseta) · pants · coat (bata)
          fem (pestañas) · must (bigote) · beard (barba) · tie (corbata) · apron (delantal)
@@ -11,7 +11,7 @@
 const ROSTER=[
   // ---- Sala de becarios ----
   {id:"samuel",room:"becarios",tag:"Ritmo en las venas",
-   look:{skin:"#7b4a2d",hs:"afro",hc:"#1b1512",top:"#ffd43b",pants:"#364fc7"},
+   look:{skin:"#7b4a2d",hs:"none",top:"#ffd43b",pants:"#364fc7"},
    st:{fuerza:7,aguante:6,suerte:5,vista:4},sp:{n:"Paso de cumbia",txt:"se marca un paso de cumbia imposible de seguir"},
    lines:["¿Ya almorzaste? Yo ya, dos veces.","Si el experimento no sale, se le pone música.","Mi código funciona. No sé por qué, pero funciona."]},
   {id:"mateo",room:"becarios",tag:"Abrazos y arepas",
@@ -169,9 +169,10 @@ function charSVG(c,opt={}){
   // cuello
   s+=`<rect x="${cx-6}" y="${sh-4}" width="12" height="9" fill="${L.skin}" stroke="${INK}" stroke-width="2.5"/>`;
   // cabeza
-  let hd=hairBack(L.hs,L.hc);
-  hd+=`<circle cx="-29" cy="5" r="6" fill="${L.skin}" ${O}/><circle cx="29" cy="5" r="6" fill="${L.skin}" ${O}/>`;
+  const back=hairBack(L.hs,L.hc);if(back)s=`<g transform="translate(${cx} ${hcy.toFixed(1)})">${back}</g>`+s;
+  let hd=`<circle cx="-29" cy="5" r="6" fill="${L.skin}" ${O}/><circle cx="29" cy="5" r="6" fill="${L.skin}" ${O}/>`;
   hd+=`<circle cx="0" cy="0" r="${R}" fill="${L.skin}" ${O}/>`;
+  if(L.hs==="none")hd+=`<ellipse cx="-10" cy="-17" rx="8" ry="4.5" fill="#fff" opacity=".35" transform="rotate(-25 -10 -17)"/>`;
   if(L.beard)hd+=`<path d="M-27 6C-26 36 26 36 27 6C20 20 -20 20 -27 6Z" fill="${L.beard}" ${O}/>`;
   hd+=hairFront(L.hs,L.hc);
   // cara

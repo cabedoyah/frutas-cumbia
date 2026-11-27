@@ -192,10 +192,19 @@ async function talkTo(c){if(!G.talked.includes(c.id)){G.talked.push(c.id);save()
   if(m1&&c.id==="fernando"){await say(c,`¡Hola, ${G.name}! Te explico rápido: arriba están los laboratorios, la sala de becarios y los despachos de los profes. Abajo, la cafetería: allí Don Tinto vende café, empanadas y, los viernes, cerveza.`);
     await say(c,"Cada misión te da XP, monedas y objetos. Con monedas compras cosas que te salvan en las batallas contra los profesores. Y créeme: las vas a necesitar.");
     await say(c,"Ah, y otra cosa: algún día te diré qué fruta eres. Toma un café de bienvenida. ☕");await complete(m1)}
-  else{const L=c.lines.filter(x=>true);await say(c,pick(L))}
+  else await converse(c)
   const mt=available().find(m=>m.type==="talkN"&&m.room===ROOM);
   if(mt){const n=npcsIn(ROOM).filter(x=>G.talked.includes(x.id)).length;if(n>=mt.n)await complete(mt);else toast(`🗣️ ${n}/${mt.n} personas saludadas`)}
   renderRoomActions();checkAch()}
+/* conversación con opciones: el personaje dice algo, eliges qué responder y te contesta (a veces hay 2 rondas) */
+async function converse(c){
+  const own=TALKS[c.id]||[],pool=[...own,...(c.id==="fernando"||c.id==="tinto"?[]:TALKS._all)];if(!pool.length)return say(c,pick(c.lines));
+  G.ti=G.ti||{};if(G.ti[c.id]==null)G.ti[c.id]=Math.random()*pool.length|0;
+  let node=pool[G.ti[c.id]%pool.length];G.ti[c.id]++;save();
+  while(node){const k=await say(c,node.t,node.o.map(o=>"💬 "+o[0]));const op=node.o[k];await say(c,op[1]);node=op[2]||null}
+  const today=new Date().toDateString();G.chat=G.chat||{};
+  if(G.chat[c.id]!==today){G.chat[c.id]=today;const l0=levelOf(G.xp);G.xp+=5;save();refreshHud();
+    toast(levelOf(G.xp)>l0?`🆙 ¡Subiste al nivel ${levelOf(G.xp)}!`:"🗣️ +5 XP por charlar")}}
 $("#roomActs").onclick=e=>{const b=e.target.closest(".act");if(!b)return;Sound.tap();if(b.dataset.shop)return openShop();const m=MISSIONS.find(x=>x.id===b.dataset.m);runMission(m)};
 
 async function runMission(m){
