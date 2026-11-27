@@ -177,7 +177,17 @@ function enterRoom(id){ROOM=id;if(!G.visited.includes(id)){G.visited.push(id);sa
   const r=ROOMS[id];$("#roomName").textContent=r.n;$("#roomScene").innerHTML=sceneSVG(r.type,id);
   const npcs=npcsIn(id);
   $("#roomNpcs").innerHTML=npcs.map(c=>`<button class="npc ${c.trio?"trio":""}" data-id="${c.id}" aria-label="${esc(nm(c))}">${anySVG(c,{mood:BOSSES[c.id]?"angry":"happy"})}${c.name?`<span>${esc(c.name)}</span>`:""}</button>`).join("");
-  renderRoomActions();show("s-room");Sound.tone(660,.08,"triangle",.08);checkAch()}
+  renderRoomActions();show("s-room");Sound.tone(660,.08,"triangle",.08);checkAch().then(()=>banter(id,npcs))}
+let lastBanter=-1;
+async function banter(id,npcs){if(Math.random()>.45)return;
+  const here=npcs.filter(c=>!BOSSES[c.id]&&c.id!==G.char),ids=here.map(c=>c.id);
+  const ok=BANTER.map((b,i)=>[b,i]).filter(([b,i])=>i!==lastBanter&&b.rooms.includes(id)&&b.l.every(([w])=>w==="*"||w==="**"||ids.includes(w)));
+  if(!ok.length)return;const[b,i]=pick(ok);lastBanter=i;
+  const fixed=b.l.map(([w])=>w).filter(w=>w[0]!=="*"),free=shuffle(here.filter(c=>!fixed.includes(c.id)));
+  const need=b.l.some(([w])=>w==="**")?2:b.l.some(([w])=>w==="*")?1:0;if(free.length<need)return;
+  await sleep(700);if(CUR!=="s-room"||ROOM!==id||$("#dlg").classList.contains("open")||$("#modal").classList.contains("open"))return;
+  toast("👂 Al entrar oyes…",1800);
+  for(const[w,t]of b.l){const c=w==="*"?free[0]:w==="**"?free[1]:charById(w);await say(c,t)}}
 function renderRoomActions(){const id=ROOM,ms=available().filter(m=>m.room===id);
   let h=ms.map(m=>`<button class="btn act" data-m="${m.id}">❗ ${esc(m.t)}<small>${esc(m.d)}</small></button>`).join("");
   if(ROOMS[id].type==="cafe")h+=`<button class="btn act mint" data-shop="1">🛒 Comprar en la barra<small>Café, empanadas${chapterNow()>=3?" y cerveza":""}</small></button>`;
@@ -200,9 +210,11 @@ async function talkTo(c){if(!G.talked.includes(c.id)){G.talked.push(c.id);save()
   renderRoomActions();checkAch()}
 /* conversación con opciones: el personaje dice algo, eliges qué responder y te contesta (a veces hay 2 rondas) */
 async function converse(c){
-  const own=TALKS[c.id]||[],pool=[...own,...(c.id==="fernando"||c.id==="tinto"?[]:TALKS._all)];if(!pool.length)return say(c,pick(c.lines));
-  G.ti=G.ti||{};if(G.ti[c.id]==null)G.ti[c.id]=Math.random()*pool.length|0;
-  let node=pool[G.ti[c.id]%pool.length];G.ti[c.id]++;save();
+  const pool=TALKS[c.id]||[];if(!pool.length)return say(c,pick(c.lines));
+  G.tq=G.tq||{};let q=G.tq[c.id];
+  if(!q||!q.length){q=shuffle(pool.map((_,i)=>i));if(G.tlast&&G.tlast[c.id]===q[0]&&q.length>1)q.push(q.shift())}
+  const idx=q.shift();G.tq[c.id]=q;G.tlast=G.tlast||{};G.tlast[c.id]=idx;save();
+  let node=pool[idx];
   while(node){const k=await say(c,node.t,node.o.map(o=>"💬 "+o[0]));const op=node.o[k];await say(c,op[1]);node=op[2]||null}
   const today=new Date().toDateString();G.chat=G.chat||{};
   if(G.chat[c.id]!==today){G.chat[c.id]=today;const l0=levelOf(G.xp);G.xp+=5;save();refreshHud();
